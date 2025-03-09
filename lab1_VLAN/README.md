@@ -130,4 +130,4 @@ interface GigabitEthernet0/1.4
   
 #### <a id="title4">Проверим работу маршрутизации между VLAN.</a>
 - Из командной строки PC-B выполним ping и tracroute на IP адрес PC-A.
-  
+  ![проверка](https://github.com/MIranaNightshade/otus-networks/blob/main/lab1_VLAN/jpeg/%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0.png)
