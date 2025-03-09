@@ -1,1 +1,1 @@
-### Курс "сетевой инженер" от [otus networks](https://otus.ru "OTUS NETWORKS")
+### Домашние задания [сетевой инженер](https://otus.ru "сетевой инженер")
