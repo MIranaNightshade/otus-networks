@@ -113,11 +113,21 @@ interface Vlan3
  ip address 192.168.3.11 255.255.255.0
 !
 ip default-gateway 192.168.3.1
-
+```
     
 #### <a id="title3">Настроим маршрутизацию между VLAN на роутере.</a>
 - Конфигурация на роутере:
 ```
-
+!
+interface GigabitEthernet0/1.3
+ encapsulation dot1Q 3
+ ip address 192.168.3.1 255.255.255.0
+!
+interface GigabitEthernet0/1.4
+ encapsulation dot1Q 4
+ ip address 192.168.4.1 255.255.255.0
+```
   
 #### <a id="title4">Проверим работу маршрутизации между VLAN.</a>
+- Из командной строки PC-B выполним ping и tracroute на IP адрес PC-A.
+  
