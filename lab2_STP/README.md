@@ -225,3 +225,74 @@
 
       ```
       Теперь порт Gi0/1 на S2 ушел в состояние BLK т.к получил от S3 лучшую BPDU чем отправил через порт Gi0/1 сам, ROOT PATH COST у S3 (2) стал меньше чем у S2 (4). (Сравнение по порядку ROOT PATH COST, BRIDGE PRIORITY, MAC)
+
+## <a id="title4">Наблюдение за процессом выбора протоколом STP порта, исходя из приоритета портов.</a>
+ - Включим порты gi0/0 gi0/2 на всех коммутаторах.
+ - Выполним команду show spanning-tree на всех коммутаторах кроме ROOT BRIDGE:
+   
+   S2:
+   ```
+   VLAN0001
+   Spanning tree enabled protocol rstp
+   Root ID    Priority    32769
+              Address     5000.0001.0000
+              Cost        4
+              Port        1 (GigabitEthernet0/0)
+              Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+   Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+              Address     5000.0002.0000
+              Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+              Aging Time  300 sec
+
+   Interface           Role Sts Cost      Prio.Nbr Type
+   ------------------- ---- --- --------- -------- --------------------------------
+   Gi0/0               Root FWD 4         128.1    Shr
+   Gi0/1               Altn BLK 4         128.2    Shr
+   Gi0/2               Desg FWD 4         128.3    Shr
+   Gi0/3               Desg FWD 4         128.4    Shr
+
+   ```
+
+   S3:
+   ```
+   S3#show spanning-tree
+
+   VLAN0001
+     Spanning tree enabled protocol rstp
+     Root ID    Priority    32769
+                Address     5000.0001.0000
+                Cost        4
+                Port        3 (GigabitEthernet0/2)
+                Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+     Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+                Address     5000.0003.0000
+                Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+                Aging Time  300 sec
+
+   Interface           Role Sts Cost      Prio.Nbr Type
+   ------------------- ---- --- --------- -------- --------------------------------
+   Gi0/0               Altn BLK 4         128.1    Shr
+   Gi0/1               Altn BLK 4         128.2    Shr
+   Gi0/2               Root FWD 4         128.3    Shr
+   Gi0/3               Altn BLK 4         128.4    Shr   
+   ```
+   ![STP топология](https://github.com/MIranaNightshade/otus-networks/blob/main/lab2_STP/jpeg/STP%20%D1%82%D0%BE%D0%BF%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F.png)
+
+   **Итого: на S2 порт Gi0/0 был выбран как ROOT, т.к приоритет порта (128.1) меньше чем у Gi0/1 (128.2) при одинаковых стоимостях COST(4).
+   аналогично на S3 Gi0/2 выбран как ROOT т.к приоритет порта (128.3) меньше чем у Gi0/3(128.4) при одинаковых стоимостях COST(4).**
+
+### Вопросы для повторения
+
+1. Какое значение протокол STP использует первым после выбора корневого моста, чтобы определить выбор порта?
+   - *стоимость порта (COST) - чем меньше тем лучше*
+  
+
+3. Если первое значение на двух портах одинаково, какое следующее значение будет использовать протокол STP при выборе порта?
+   - *Приоритет порта (PORT PRIORITY) - чем меньше тем лучше*
+   
+
+3. Если оба значения на двух портах равны, каким будет следующее значение, которое использует протокол STP при выборе порта?
+   - *Номер порта -  чем меньше тем лучше*   
+     
