@@ -97,24 +97,131 @@
 
     **Ответы на вопросы:**
     
-     a. Какой коммутатор является корневым мостом?
+     a. **Какой коммутатор является корневым мостом?**
        - *Коммутатор S1 является ROOT BRIDGE.*
     
-     b. Почему этот коммутатор был выбран протоколом spanning-tree в качестве корневого моста?
-       - *S1 был выбран в ROOT т.к у него наименьший mac из всех 3 коммутаторов, сначала сравнение шло по ROOT BRIDGE ID, но т.к BRIDGE ID == 32768 у всех коммутаторов, то выбор производился по mac.*
+     b. **Почему этот коммутатор был выбран протоколом spanning-tree в качестве корневого моста?**
+       - *S1 был выбран в ROOT т.к у него наименьший mac из всех 3 коммутаторов, сначала сравнение шло по ROOT BRIDGE PRIORITY, но т.к BRIDGE PRIORITY == 32768 у всех коммутаторов, то выбор производился по mac.*
     
-     с. Какие порты на коммутаторе являются корневыми портами?
+     с. **Какие порты на коммутаторе являются корневыми портами?**
       - *Порт с которого был получен наилучший BPDU (по порядку сравниваются ROOT PATH COST, PORT PRIORITY и PORT ID) становится ROOT портом. ROOT порт это порт с наименьшей стоимостью пути до ROOT BRIDGE. В нашем случае S2 gi0/0 и S3 gi0/2*
 
 
-      d. Какие порты на коммутаторе являются назначенными портами?
+      d. **Какие порты на коммутаторе являются назначенными портами?**
        - *Порты через которые осуществляется доступ к сегменту сети являются назначенными (designated) портами у ROOT BRIDGE все порты являются DESIGNATED. В нашем случае за исключением портов ROOT BRIDGE назначенными портами являются: S2 gi0/2 и S2 gi0/3*
         
 
-      c. Какие порты отображается в качестве альтернативных и в настоящее время заблокированы?
+      c. **Какие порты отображается в качестве альтернативных и в настоящее время заблокированы?**
        - *Порты которые не стали DESIGNATED или ROOT переводятся в состояние BLOCKED и являются ALTERNATE PORTS (не принимают и не передают кадры только слушают BPDU). В нашем случае это порты gi0/0, gi0/1 и gi0/3 на S3.*
 
         
-      d. Почему протокол spanning-tree выбрал эти порты в качестве невыделенных (заблокированных) портов?
-       - *Выбор осуществляется следующим образом: коммутатор запоминает BPDU которые когда-либо были им приняты или отправлены через любой порт, он сравнивает BPDU которые были приняты и отправлены не ROOT портом и в случае если отправленный им BPDU был хуже чем тот который был принят, то он принимает решение о переводе роли порта в ALTERNATE и статуса порта в BLOCKED. В нашем случае на S3 порт Gi0/3 стал в роль ALTE (состояние BLK) т.к mac S1 при одинаковых ROOT BRIDGE ID меньше чем его собственный и аналогично для портов gi0/1 и gi0/0 mac S2 меньше чем его собсвенный, т.о S3 через порты gi0/3, gi0/1 и gi0/0 отправил худшие BPDU чем те которые получил от S2 и S1.*      
-        
+      d. **Почему протокол spanning-tree выбрал эти порты в качестве невыделенных (заблокированных) портов?**
+       - *Выбор осуществляется следующим образом: коммутатор запоминает BPDU которые когда-либо были им приняты или отправлены через любой порт, он сравнивает BPDU которые были приняты и отправлены не ROOT портом и в случае если отправленный им BPDU был хуже чем тот который был принят, то он принимает решение о переводе роли порта в ALTERNATE и статуса порта в BLOCKED. В нашем случае на S3 порт Gi0/3 стал в роль ALTE (состояние BLK) т.к mac S1 при одинаковых ROOT PATH COST и ROOT BRIDGE PRIORITY меньше чем его собственный и аналогично для портов gi0/1 и gi0/0 mac S2 меньше чем его собсвенный, т.о S3 через порты gi0/3, gi0/1 и gi0/0 отправил худшие BPDU чем те которые получил от S2 и S1.*
+
+## <a id="title3">Наблюдение за процессом выбора протоколом STP порта, исходя из стоимости портов</a>
+ 1. **Оставим включенными только порты F0/2 и F0/4 на всех коммутаторах.**
+ 2. **Определим коммутатор с заблокированным портом.**
+    - Коммутатор S3 порт gi0/1 перешел в состояние BLK, т.к mac S2 меньше чем mac S3 (5000.0002.0000 < 5000.0003.0000)  при одинаковых ROOT BRIDGE PRIORITY:
+
+      S2:
+      ```
+      S2#show spanning-tree
+
+      VLAN0001
+        Spanning tree enabled protocol rstp
+        Root ID    Priority    32769
+                   Address     5000.0001.0000
+                   Cost        4
+                   Port        2 (GigabitEthernet0/1)
+                   Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+        Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+                   Address     5000.0002.0000
+                   Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+                   Aging Time  300 sec
+
+      Interface           Role Sts Cost      Prio.Nbr Type
+      ------------------- ---- --- --------- -------- --------------------------------
+      Gi0/1               Root FWD 4         128.2    Shr
+      Gi0/3               Desg FWD 4         128.4    Shr      
+      ```
+
+      S3:
+      ```
+      S3#show spanning-tree
+
+      VLAN0001
+       Spanning tree enabled protocol rstp
+       Root ID    Priority    32769
+                   Address     5000.0001.0000
+                   Cost        4
+                   Port        4 (GigabitEthernet0/3)
+                   Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+        Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+                   Address     5000.0003.0000
+                   Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+                   Aging Time  300 sec
+
+      Interface           Role Sts Cost      Prio.Nbr Type
+      ------------------- ---- --- --------- -------- --------------------------------
+      Gi0/1               Altn BLK 4         128.2    Shr
+      Gi0/3               Root FWD 4         128.4    Shr     
+      ```  
+ 4. **Изменим стоимость порта на S3.**
+    - Уменьшим стоимость порта Gi0/1 на S3:
+      ```
+      S3(config)#interface gigabitEthernet 0/3
+      S3(config-if)#spanning-tree cost 2
+      ```
+         
+ 6. **Посмотрим изменения протокола spanning-tree.**
+    - Статус STP на S2:
+      
+      ```
+      S2#show spanning-tree
+
+      VLAN0001
+        Spanning tree enabled protocol rstp
+        Root ID    Priority    32769
+                   Address     5000.0001.0000
+                   Cost        4
+                   Port        2 (GigabitEthernet0/1)
+                   Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+        Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+                   Address     5000.0002.0000
+                   Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+                   Aging Time  300 sec
+
+      Interface           Role Sts Cost      Prio.Nbr Type
+      ------------------- ---- --- --------- -------- --------------------------------
+      Gi0/1               Root FWD 4         128.2    Shr
+      Gi0/3               Altn BLK 4         128.4    Shr
+      
+      ```
+    - Статус STP на S3:
+      
+      ```
+      S3#show spanning-tree
+
+      VLAN0001
+      Spanning tree enabled protocol rstp
+      Root ID    Priority    32769
+                 Address     5000.0001.0000
+                 Cost        2
+                 Port        4 (GigabitEthernet0/3)
+                 Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+      Bridge ID  Priority    32769  (priority 32768 sys-id-ext 1)
+                 Address     5000.0003.0000
+                 Hello Time   2 sec  Max Age 20 sec  Forward Delay 15 sec
+                 Aging Time  300 sec
+
+      Interface           Role Sts Cost      Prio.Nbr Type
+      ------------------- ---- --- --------- -------- --------------------------------
+      Gi0/1               Desg FWD 4         128.2    Shr
+      Gi0/3               Root FWD 2         128.4    Shr
+
+      ```
+      Теперь порт Gi0/1 на S2 ушел в состояние BLK т.к получил от S3 лучшую BPDU чем отправил через порт Gi0/1 сам, ROOT PATH COST у S3 (2) стал меньше чем у S2 (4). (Сравнение по порядку ROOT PATH COST, BRIDGE PRIORITY, MAC)
