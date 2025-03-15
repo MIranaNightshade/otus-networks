@@ -14,7 +14,7 @@
    -  **Цели:**
      
   1. [Настройка основных параметров устройства](#title1)
-  2. [Выбор корневого моста](#title2)
+  2. [Определение корневого моста](#title2)
   3. [Наблюдение за процессом выбора протоколом STP порта, исходя из стоимости портов](#title3)
   4. [Наблюдение за процессом выбора протоколом STP порта, исходя из приоритета портов](#title4)
 
@@ -71,9 +71,25 @@
           ![STP проверка связи2](https://github.com/MIranaNightshade/otus-networks/blob/main/lab2_STP/jpeg/STP%20%D0%BF%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%BA%D0%B0%20%D1%81%D0%B2%D1%8F%D0%B7%D0%B8%202.png)
         
         
+## <a id="title2">Определение корневого моста.</a>
+ 1. Отключим все порты на коммутаторах.
+ 2. Настроим подключенные порты в качестве транковых.
+ 3. Включим порты G0/1 и G0/3 на всех коммутаторах.
+ 4. Отобразим данные протокола STP.
 
-
-
- 
+     **Данные протокола STP после выполнения пунктов 1-3:**
+    
+       S1:
+    
+     ![STP S1](https://github.com/MIranaNightshade/otus-networks/blob/main/lab2_STP/jpeg/STP%20S1.png)
+    
+       S2:
+    
+     ![STP S2](https://github.com/MIranaNightshade/otus-networks/blob/main/lab2_STP/jpeg/STP%20S2.png)
+    
+       S3:
+    
+     ![STP S3](https://github.com/MIranaNightshade/otus-networks/blob/main/lab2_STP/jpeg/STP%20S3.png)  
+  
 
 	  
