@@ -148,7 +148,7 @@
          !
          ipv6 route ::/0 2001:DB8:ACAD:2::2
          !
-       ```     
+            
     - Проверим работу маршрутизации отправив ping с R1 до IP адреса R2 на интерфейсе G0/1.
       ![ping](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/ping.png)
   
@@ -159,6 +159,31 @@
   
   ![PC_A_SLAAC](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/PC_A_SLAAC.png)
 
+  Из скриншота выше видим что PС-Ф получил адрес 2001:db8:acad:1:2050:79ff:fe66:6805/64 с помощью SLAAC от роутера R1 (префикс или первые 64 бита адреса выдал R1, оставшуюся чать PC-A сформировал сам используя EUI-64 используя mac-адрес интерфейса)
+
+## <a id="title3"> 3. Настроим и проверим работу stateless DHCPv6 server на R1.</a>
+
+  - Создадим IPv6 DHCP пул на R1 с именем R1-STATELESS. Как часть этого пула настроим DNS сервер с адресом 2001:db8:acad::1 и доменное имя stateless.com.
+  - Настроим интерфейс G0/1 на R1 для передаси флага OTHER на R1 LAN и назначим на этот интерфейс пул DHCP R1-STATELESS.
+
+
+  ```
+  ipv6 dhcp pool R1-STATELESS
+  dns-server 2001:DB8:ACAD::1
+  domain-name STATELESS.com
+  !
+  interface GigabitEthernet0/1
+   no ip address
+   duplex auto
+   speed auto
+   media-type rj45
+   ipv6 address FE80::1 link-local
+   ipv6 address 2001:DB8:ACAD:1::1/64
+   ipv6 enable
+   ipv6 nd other-config-flag
+   ipv6 dhcp server R1-STATELESS
+  !
+ 
           
 
   
