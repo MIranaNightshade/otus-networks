@@ -189,24 +189,24 @@
  ## <a id="title4"> 4. Настроим и проверим работу stateful DHCPv6 Server на R1.</a>
    - Создадим пул DHCPv6 на R1 для сети 2001:db8:acad:3:aaaa::/80, который будет предоставлять адреса на LAN подключенный к G0/1 R2. Как часть пула так же настроим DNS сервер 2001:db8:acad::254 и доменное имя STATEFULL.com
    - Привяжем созданный DHCPv6 пул на G0/0 R1.    
-```
-!
-ipv6 dhcp pool R2-STATEFULL
- address prefix 2001:DB8:ACAD:3:AAA::/80
- dns-server 2001:DB8:ACAD::254
- domain-name STATEFUL.com
-!
-interface GigabitEthernet0/0
- no ip address
- duplex auto
- speed auto
- media-type rj45
- ipv6 address FE80::1 link-local
- ipv6 address 2001:DB8:ACAD:2::1/64
- ipv6 enable
- ipv6 dhcp server R2-STATEFULL
-!
-```
+     ```
+     !
+     ipv6 dhcp pool R2-STATEFULL
+      address prefix 2001:DB8:ACAD:3:AAA::/80
+      dns-server 2001:DB8:ACAD::254
+      domain-name STATEFUL.com
+     !
+     interface GigabitEthernet0/0
+      no ip address
+      duplex auto
+      speed auto
+      media-type rj45
+      ipv6 address FE80::1 link-local
+      ipv6 address 2001:DB8:ACAD:2::1/64
+      ipv6 enable
+      ipv6 dhcp server R2-STATEFULL
+     !
+     ```
 ## <a id="title5"> 5. Настроить и проверить работу DHCPv6 Relay на R2.</a>
 - Посмотрм какой IPv6 адрес сгенерировал PC-B при помощи SLAAC, на скриншоте нижу видим что это адрес 2001:db8:acad:3:2050:79ff:fe66:6806/64 (префикс 2001:db8:acad:3::/64)
 ![PC_B_SLAAC](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/PC_B_SLAAC.png)
