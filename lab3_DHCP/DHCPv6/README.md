@@ -140,18 +140,24 @@
              ipv6 address 2001:DB8:ACAD:2::1/64
              ipv6 enable
             end
+        ```
           
     - Настроим маршрут по умолчанию на каждом роутере с привязкой к IP адресу на интерфейсе G0/0 другого роутера.
       *Пример настройки маршрута по умолчанию на R1:*
        ```
          !
          ipv6 route ::/0 2001:DB8:ACAD:2::2
-         !      
+         !
+       ```     
     - Проверим работу маршрутизации отправив ping с R1 до IP адреса R2 на интерфейсе G0/1.
-      ![ping](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/%D1%82%D0%BE%D0%BF%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F.png)
+      ![ping](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/ping.png)
+  
 
   ## 2. Проверим получение адресов с помощью SLAAC от R1.
-    *Для этого включим на PC-A получение IPv6 адреса с помощью SLAAC*
+  
+  *Для этого включим на PC-A получение IPv6 адреса с помощью SLAAC*
+  
+  ![PC_A_SLAAC](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/PC_A_SLAAC.png)
 
           
 
