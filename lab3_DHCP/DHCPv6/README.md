@@ -64,7 +64,7 @@
   4. Настроить и проверить работу stateful DHCPv6 Server на R1.
   5. Настроить и проверить работу DHCPv6 Relay на R2.
 
-## 1. Создать сетевую тьопологию и задать устройствам базовые настройки.
+## 1. Создадим сетевую тьопологию и введем базовые настройки на устройствах.
 
 - **Базовые настройки для коммутаторов:**
   
@@ -92,41 +92,62 @@
 
  - **Базовая настройка на примере маршрутизатора R1:**     
 
-```  
-service password-encryption
-!
-hostname R1
-!
-enable secret 5 $1$zdki$phCu/QuYvLjI7kmOGkWeF0
-!
-no aaa new-model
-ethernet lmi ce
-!
-no ip domain lookup
-ip cef
-ipv6 unicast-routing
-ipv6 cef
-!
-banner motd ^C
-*******************************
-*******************************
-* HANDS OFF FROM MY LITTLE R1 *
-*  AND GET OUT OF HERE        *
-*******************************
-*******************************
-^C
-!
-line con 0
- password 7 13061E01080344
- login
-line aux 0
-!
-line vty 5 15
- password 7 060506324F41
- login
- transport input none
-!
-```
-   
+    ```  
+    service password-encryption
+    !
+    hostname R1
+    !
+    enable secret 5 $1$zdki$phCu/QuYvLjI7kmOGkWeF0
+    !
+    no ip domain lookup
+    ip cef
+    ipv6 unicast-routing
+    ipv6 cef
+    !
+    banner motd ^C
+    *******************************
+    *******************************
+    * HANDS OFF FROM MY LITTLE R1 *
+    *  AND GET OUT OF HERE        *
+    *******************************
+    *******************************
+    ^C
+    !
+    line con 0
+     password 7 13061E01080344
+     login
+    line aux 0
+    !
+    line vty 5 15
+     password 7 060506324F41
+     login
+     transport input none
+    !
+    ```
+- **Настроим интерфейсы и маршрутизацию на обоих роутерах.**
+   - Настроим IP адреса из таблицы выше на интерфейсах G0/0 и G0/1 на R1 и R2.
+     
+     *Пример настройки IP адресов на R1 G0/0:*
+        ```
+            Current configuration : 175 bytes
+            !
+            interface GigabitEthernet0/0
+             no ip address
+             duplex auto
+             speed auto
+             media-type rj45
+             ipv6 address FE80::1 link-local
+             ipv6 address 2001:DB8:ACAD:2::1/64
+             ipv6 enable
+            end
+          
+    - Настроим маршрут по умолчанию на каждом роутере с привязкой к IP адресу на интерфейсе G0/0 другого роутера.
+      *Пример настройки маршрута по умолчанию на R1:*
+       ```
+         !
+         ipv6 route ::/0 2001:DB8:ACAD:2::2
+         !      
+    - Проверим работу маршрутизации отправив ping с R1 до IP адреса R2 на интерфейсе G0/1.
+      ![ping](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/ping.png)     
 
   
