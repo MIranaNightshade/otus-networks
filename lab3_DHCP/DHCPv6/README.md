@@ -64,7 +64,7 @@
   4. [Настроить и проверить работу stateful DHCPv6 Server на R1.](#title4)
   5. [Настроить и проверить работу DHCPv6 Relay на R2.](#title5)
 
-## <a id="title1"> 1. Создадим сетевую тьопологию и введем базовые настройки на устройствах.</a>
+## <a id="title1"> 1. Создадим сетевую топологию и введем базовые настройки на устройствах.</a>
 
 - **Базовые настройки для коммутаторов:**
   
@@ -184,7 +184,8 @@
    ipv6 dhcp server R1-STATELESS
   !
  ``` 
- **ПРОВЕРИТЬ НЕ МОГУ НИЧЕГО НЕ ЗАРАБОТАЛО ВЕРНУСЬ СЮДА ПОЗЖЕ**
+  - Проверка работы STATELESS DHCPv6 на PC-A
+    ![STATELESS](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/STATELESS.png)
 
  ## <a id="title4"> 4. Настроим и проверим работу stateful DHCPv6 Server на R1.</a>
    - Создадим пул DHCPv6 на R1 для сети 2001:db8:acad:3:aaaa::/80, который будет предоставлять адреса на LAN подключенный к G0/1 R2. Как часть пула так же настроим DNS сервер 2001:db8:acad::254 и доменное имя STATEFULL.com
@@ -208,8 +209,8 @@
      !
      ```
 ## <a id="title5"> 5. Настроить и проверить работу DHCPv6 Relay на R2.</a>
-- Посмотрм какой IPv6 адрес сгенерировал PC-B при помощи SLAAC, на скриншоте нижу видим что это адрес 2001:db8:acad:3:2050:79ff:fe66:6806/64 (префикс 2001:db8:acad:3::/64)
-![PC_B_SLAAC](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/PC_B_SLAAC.png)
+- Посмотрм какой IPv6 адрес сгенерировал PC-B при помощи SLAAC:
+  ![PC_B_SLAAC](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/PC_BB_SLAAC.png)
 
 - Настроим R2 как DHCP relay агента на G0/1
 
@@ -228,6 +229,11 @@
   end
   ```
 
+- Проверка работы DHCP relay:
+ ![DHCP_relay](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/STATEFUL.png)
+
+- Протестируем связность отправив ping на R1 интерфейс G0/0/1:
+ ![pingv6](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/pingv6.png) 
 
           
 
