@@ -230,9 +230,11 @@
   ```
 
 - Проверка работы DHCP relay:
+  
  ![DHCP_relay](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/STATEFUL.png)
 
 - Протестируем связность отправив ping на R1 интерфейс G0/0/1:
+  
  ![pingv6](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv6/jpeg/pingv6.png) 
 
           
