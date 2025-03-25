@@ -221,4 +221,121 @@
         
       - **Проверим работу маршрутизации между роутерами, отправим ping с R1 на IP 192.168.0.193 (R2 G0/0/1):**
         
-        ![ping](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/ping_check.png) 
+        ![ping](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/ping_check.png)
+
+ 3. **Настроим коммутаторы S1 и S2, зададим базовые настройки, настроим VLAN на S1 согласно таблице VLAN, зададим коммутаторам IP адреса согласно таблице и зададим default-gateway**
+    
+      - **Конфигурация S1**
+        
+	       ```
+	        hostname S1
+		!
+		!
+		enable secret 5 $1$Dfee$zXHUxlvHVZwXBLcH4X8b4/
+		!
+		no ip domain-lookup
+		!
+		interface Ethernet0/0
+		 switchport access vlan 999
+		 switchport mode access
+		 shutdown
+		!
+		interface Ethernet0/1
+		 switchport trunk allowed vlan 100,200,1000
+		 switchport trunk encapsulation dot1q
+		 switchport trunk native vlan 1000
+		 switchport mode trunk
+		!
+		interface Ethernet0/2
+		 switchport access vlan 999
+		 switchport mode access
+		 shutdown
+		!
+		interface Ethernet0/3
+		 switchport access vlan 100
+		 switchport mode access
+		!
+		interface Vlan200
+		 ip address 192.168.0.130 255.255.255.192
+		!
+		ip default-gateway 192.168.0.129
+		!
+		banner motd ^C
+		*******************************
+		*******************************
+		* HANDS OFF FROM MY LITTLE S1 *
+		*  AND GET OUT OF HERE        *
+		*******************************
+		*******************************
+		^C
+		!
+		line con 0
+		 password 7 110A1016141D
+		 logging synchronous
+		 login
+		line aux 0
+		line vty 0 4
+		 password 7 030752180500
+		 login
+		!
+		!
+		end
+                
+
+        
+      - **Конфигурация S2**
+        
+	       ```
+		hostname S2
+		!
+		enable secret 5 $1$4o.V$WnkNberihLmZHsmGJ.6Zt.
+		!
+		no ip domain-lookup
+		ip cef
+		no ipv6 cef
+		!
+		interface Ethernet0/0
+		 shutdown
+		!
+		interface Ethernet0/1
+		!
+		interface Ethernet0/2
+		 shutdown
+		!
+		interface Ethernet0/3
+		!
+		interface Vlan1
+		 ip address 192.168.0.194 255.255.255.192
+		 shutdown
+		!
+		ip default-gateway 192.168.0.193
+		ip forward-protocol nd
+		!
+		no ip http server
+		no ip http secure-server
+		!
+		banner motd ^C
+		*******************************
+		*******************************
+		* HANDS OFF FROM MY LITTLE S2 *
+		*  AND GET OUT OF HERE        *
+		*******************************
+		*******************************
+		^C
+		!
+		line con 0
+		 password 7 121A0C041104
+		 logging synchronous
+		 login
+		line aux 0
+		line vty 0 4
+		 password 7 110A1016141D
+		 login
+		!
+		!
+		end
+
+  ### <a id="title2"> 1. Настроим два DHCPv4 сервера на R1.</a>
+
+  
+         
