@@ -16,37 +16,37 @@
    </tr>
    <tr>
    <td rowspan = 5>R1</td>
-   <td>G0/0/0</td>
+   <td>G0/0</td>
    <td>10.0.0.1</td>
    <td>255.255.255.252</td>
    <td rowspan = 5>N/A</td>
    </tr>
-   <td>G0/0/1</td>
+   <td>G0/1</td>
    <td>N/A</td>
    <td>N/A</td>
    <tr>
-  <td>G0/0/1.100</td>
+  <td>G0/1.100</td>
   <td>192.168.0.1</td>
   <td>255.255.255.128</td>
 
    </tr>
    <tr>
-    <td>G0/0/1.200</td>
+    <td>G0/1.200</td>
 	<td>192.168.0.129</td>
   <td>255.255.255.192</td>
    </tr>
-   <td>G0/0/1.1000</td>
+   <td>G0/1.1000</td>
     <td>N/A</td>
 	 <td>N/A</td>
    <tr>
    <td rowspan = 2>R2</td>
-   <td >G0/0/0</td>
+   <td >G0/0</td>
    <td >10.0.0.2</td>
    <td >255.255.255.252</td>
    <td rowspan = 2 >N/A</td>
    </tr>
    <tr>
-   <td >G0/0/1</td>
+   <td >G0/1</td>
 	 <td >192.168.0.193</td>
 	  <td >255.255.255.192</td>
    </tr>
