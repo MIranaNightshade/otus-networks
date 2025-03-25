@@ -55,14 +55,14 @@
    <td >VLAN 200</td>
    <td >192.168.0.130</td>
    <td >255.255.255.192</td>
-   <td ></td>
+   <td >192.168.0.129</td>
    </tr>
    <tr>
    <td >S2</td>
    <td >VLAN 1</td>
-    <td ></td>
-   <td ></td>
-   <td ></td>
+    <td >192.168.0.194</td>
+   <td >255.255.255.192</td>
+   <td >192.168.0.193</td>
    </tr>
    <tr>
     <td >PC-A</td>
@@ -219,6 +219,6 @@
 		!
 		end  
         
-
-   
-   
+      - **Проверим работу маршрутизации между роутерами, отправим ping с R1 на IP 192.168.0.193 (R2 G0/0/1):**
+        
+        ![ping](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/ping_check.png) 
