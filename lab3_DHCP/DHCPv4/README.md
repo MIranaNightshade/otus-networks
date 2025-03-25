@@ -26,18 +26,18 @@
    <td>N/A</td>
    <tr>
   <td>G0/0/1.100</td>
-  <td></td>
-  <td></td>
+  <td>192.168.0.1</td>
+  <td>255.255.255.128</td>
 
    </tr>
    <tr>
     <td>G0/0/1.200</td>
-	<td></td>
-  <td></td>
+	<td>192.168.0.129</td>
+  <td>255.255.255.192</td>
    </tr>
    <td>G0/0/1.1000</td>
-    <td></td>
-	 <td></td>
+    <td>N/A</td>
+	 <td>N/A</td>
    <tr>
    <td rowspan = 2>R2</td>
    <td >G0/0/0</td>
@@ -47,14 +47,14 @@
    </tr>
    <tr>
    <td >G0/0/1</td>
-	 <td ></td>
-	  <td ></td>
+	 <td >192.168.0.193</td>
+	  <td >255.255.255.192</td>
    </tr>
    <tr>
    <td >S1</td>
    <td >VLAN 200</td>
-   <td ></td>
-   <td ></td>
+   <td >192.168.0.130</td>
+   <td >255.255.255.192</td>
    <td ></td>
    </tr>
    <tr>
@@ -100,5 +100,125 @@
    
   ### <a id="title1"> 1. Создать сеть и настроить базовую конфигурацию.</a>
   
+   1. **Разделим сеть 192.168.0.0/24 на подсети.**
+      - Подсеть А 192.168.0.0/25 (client vlan R1, 192.168.0.1/25 для **R1 G0/0/1.100**)
+      - Подсеть В 192.168.0.128/26 (management VLAN R1, 192.168.0.129/26 для **R1 G0/0/1.200**, 192.168.0.130/26 **S1 VLAN 200**)
+      - Подсеть С 192.168.0.192/26 (сеть для клиентов на R2, 192.168.0.193/26 **R2 G0/0/1**)
+   2. **Зададим базовые настройки на обоих роутерах и настроим межвланную маршрутизацию на R1, настроим статическую маршрутизацию между R1 и R2.**
+      - Конфигурация R1.
+	       ```  
+		hostname R1
+		!
+		enable secret 5 $1$zdpZ$8brH5mFX7sIogZEFYEvCU/
+		!
+		interface GigabitEthernet0/0
+		 ip address 10.0.0.1 255.255.255.252
+		 duplex auto
+		 speed auto
+		 media-type rj45
+		!
+		interface GigabitEthernet0/1
+		 no ip address
+		 duplex auto
+		 speed auto
+		 media-type rj45
+		!
+		interface GigabitEthernet0/1.100
+		 encapsulation dot1Q 100
+		 ip address 192.168.0.1 255.255.255.128
+		!
+		interface GigabitEthernet0/1.200
+		 encapsulation dot1Q 200
+		 ip address 192.168.0.129 255.255.255.192
+		!
+		no ip http server
+		no ip http secure-server
+		ip route 0.0.0.0 0.0.0.0 10.0.0.2
+		!
+		banner motd ^C
+		*******************************
+		*******************************
+		* HANDS OFF FROM MY LITTLE R1 *
+		*  AND GET OUT OF HERE        *
+		*******************************
+		*******************************
+		^C
+		!
+		line con 0
+		 password 7 045802150C2E
+		 login
+		line aux 0
+		line vty 0 4
+		 password 7 110A1016141D
+		 login
+		 transport input none
+		line vty 5 15
+		 password 7 110A1016141D
+		 login
+		 transport input none
+		!
+		no scheduler allocate
+		!
+		end
+		
+		R1#
+	        		
+      - Конфигурация R2:
+      
+	        
+		```
+		hostname R2
+		!
+		!
+		enable secret 5 $1$GhJj$M.us3si26yx9bxSneA58U/
+		!
+		no aaa new-model
+		ethernet lmi ce
+		!
+		no ip domain lookup
+		!
+		interface GigabitEthernet0/0
+		 ip address 10.0.0.2 255.255.255.252
+		 duplex auto
+		 speed auto
+		 media-type rj45
+		!
+		interface GigabitEthernet0/1
+		 ip address 192.168.0.193 255.255.255.192
+		 duplex auto
+		 speed auto
+		 media-type rj45
+		!
+		no ip http server
+		no ip http secure-server
+		ip route 0.0.0.0 0.0.0.0 10.0.0.1
+		!
+		banner motd ^C
+		*******************************
+		*******************************
+		* HANDS OFF FROM MY LITTLE R2 *
+		*  AND GET OUT OF HERE        *
+		*******************************
+		*******************************
+		^C
+		!
+		line con 0
+		 password 7 14141B180F0B
+		 login
+		line aux 0
+		line vty 0 4
+		 password 7 030752180500
+		 login
+		 transport input none
+		line vty 5 15
+		 password 7 030752180500
+		 login
+		 transport input none
+		!
+		no scheduler allocate
+		!
+		end  
+        
+
    
    
