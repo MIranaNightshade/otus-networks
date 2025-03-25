@@ -335,7 +335,58 @@
 		!
 		end
 
-  ### <a id="title2"> 1. Настроим два DHCPv4 сервера на R1.</a>
-
+  ### <a id="title2"> 2. Настроим два DHCPv4 сервера на R1.</a>
   
+  - **Конфиг DHCPv4 на R1:**
+     
+    ```
+	!
+	ip dhcp excluded-address 192.168.0.1 192.168.0.5
+	ip dhcp excluded-address 192.168.0.193 192.168.0.197
+	!
+	ip dhcp pool R1_CLIENT_LAN
+	 network 192.168.0.0 255.255.255.128
+	 default-router 192.168.0.1
+	 domain-name ccna-lab.com
+	 lease 2 12 30
+	!
+	ip dhcp pool R2_CLIENT_LAN
+	 network 192.168.0.192 255.255.255.192
+	 default-router 192.168.0.193
+	 domain-name ccna-lab.com
+	 lease 2 12 30
+	!
+      	
+ - **Проверим работу DHCP сервера:**
+   - Проверка на R1, видим что R1 выдал 192.168.0.6 на хост PC-A:
+     
+     ![DHCP_R1](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/DHCP_R1_CHECK.png)
+     
+   - Проверка на хосте PC-A:
+   
+     ![DHCP_R1](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/DHCP_PCA_CHECK.png)
+     
+### <a id="title3"> 3. Настроим два DHCP relay на R2.</a>
+
+- **ipconfig PC-B**
+  
+  ![IP config](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/ipconfig_PCA.png)
+
+- **Ping до R1**
+  
+  ![ping R1](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/ping_R1.png)
+
+- **IP DHCP binding R1**
+  
+   ![DHCP BIND](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/ip_dhcp_bind.png)
+
+- **IP DHCP SERVER STATISTICS R1 R2**
+
+   ![IP DHCP STAT](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/ip_dhcp_statis_R1.png)
+
+   ![IP DHCP STAT2](https://github.com/MIranaNightshade/otus-networks/blob/main/lab3_DHCP/DHCPv4/jpeg/ip_dhcp_statis_R2.png) 
+  
+  
+	
+       
          
