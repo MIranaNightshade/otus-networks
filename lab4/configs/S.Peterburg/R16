@@ -1,0 +1,126 @@
+Building configuration...
+
+Current configuration : 1326 bytes
+!
+! Last configuration change at 17:15:39 UTC Fri Apr 18 2025
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R16
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.6.16 255.255.255.255
+!
+interface Ethernet0/0
+ no ip address
+!
+interface Ethernet0/0.10
+ encapsulation dot1Q 10
+ ip address 172.16.6.253 255.255.255.0
+ vrrp 1 ip 172.16.6.254
+!
+interface Ethernet0/0.20
+ encapsulation dot1Q 20
+ ip address 172.17.6.254 255.255.255.0
+ vrrp 2 ip 172.17.6.254
+!
+interface Ethernet0/0.100
+ encapsulation dot1Q 100
+ ip address 10.4.6.254 255.255.255.0
+ vrrp 3 ip 10.4.6.254
+!
+interface Ethernet0/1
+ ip address 10.7.0.41 255.255.255.252
+!
+interface Ethernet0/2
+ ip address 10.7.0.45 255.255.255.252
+!
+interface Ethernet0/3
+ ip address 10.7.0.49 255.255.255.252
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+!
+end
+
+R16#
