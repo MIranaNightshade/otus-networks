@@ -337,6 +337,8 @@ SW5#
 | 20 | HOST2 |
 | 100 | MANAGEMENT |
 
+Настроим VRRP между R17 и R16 так чтобы для vlan 10 (HOST1) master был 
+
 [Конфиги в С.-Петербурге можно посмотреть здесь](https://github.com/MIranaNightshade/otus-networks/tree/main/lab4/configs/S.Peterburg)
 
   
