@@ -21,10 +21,10 @@
   
   
   Будем использовать следующие подсети: 
-  Суммарные подсети для управления и loopback итерфейсов 10.5.0.0/21, для линков между роутерами (кроме провайдеров Киторн, Ламас, Триада и линков к провайдерам) 10.7.0.0/21, разделим эти подсети на /24 таким образом,
-     чтобы третий октет соотвествовал разным локациям по следующему принципу: 0 - Москва, 1 - Киторн, 2 - Ламас, 3 - Триада, 4 - Лабытнанги, 5 - Чокурдах, 6 - С.Петербург. Для хостов используем подсеть 172.16.0.0/12,
-     разобем ее на подсети /24 для хостов в Москве 172.16.0.0/24, 172.17.0.0/24; для хостов в С.Петербурге 172.16.6.0/24, 172.17.6.0/24; для хостов в Чокурдахе 172.16.5.0/24, 172.17.5.0/24. Последний октет для всех
-     будет соответствовать порядковому номеру устройства на схеме сети.     
+  Суммарные подсети для loopback итерфейсов ротуеров 10.5.0.0/21, для интерфейсов управления коммутаторами 10.4.0.0./21,  для линков между роутерами (кроме провайдеров Киторн, Ламас, Триада и линков к провайдерам) 10.7.0.0/21, 
+  разделим эти подсети на /24 таким образом, чтобы третий октет соотвествовал разным локациям по следующему принципу: 0 - Москва, 1 - Киторн, 2 - Ламас, 3 - Триада, 4 - Лабытнанги, 5 - Чокурдах, 6 - С.Петербург. Для хостов используем подсеть 
+  172.16.0.0/12, разобем ее на подсети /24 для хостов в Москве 172.16.0.0/24, 172.17.0.0/24; для хостов в С.Петербурге 172.16.6.0/24, 172.17.6.0/24; для хостов в Чокурдахе 172.16.5.0/24, 172.17.5.0/24. Последний октет для всех
+  будет соответствовать порядковому номеру устройства на схеме сети.     
   
   Общая таблица сетей:
   | №| LOCATION | NETWORK MANAGEMENT/LOOPBACK  | ROUTER'S LINKS | HOSTS NETWORKS |
@@ -102,13 +102,13 @@
   
  | device | management IP | management network | management vlan |
  |--------| ----------| ------------|-----|
- |SW2 | 10.5.0.2/24 | 10.5.0.0/24 | 100 |
- |SW3 | 10.5.0.3/24 | 10.5.0.0/24 | 100 | 
- |SW4 | 10.5.0.4/24 | 10.5.0.0/24 | 100 |
- |SW5 | 10.5.0.5/24 | 10.5.0.0/24 | 100 | 
- |SW9 | 10.5.6.9/24 | 10.5.6.0/24 | 100 |
- |SW10| 10.5.6.10/24 | 10.5.6.0/24 | 100 | 
- |SW29| 10.5.5.29/24 |10.5.5.0/24 | 100|
+ |SW2 | 10.4.0.2/24 | 10.4.0.0/24 | 100 |
+ |SW3 | 10.4.0.3/24 | 10.4.0.0/24 | 100 | 
+ |SW4 | 10.4.0.4/24 | 10.4.0.0/24 | 100 |
+ |SW5 | 10.4.0.5/24 | 10.4.0.0/24 | 100 | 
+ |SW9 | 10.4.6.9/24 | 10.4.6.0/24 | 100 |
+ |SW10| 10.4.6.10/24 | 10.4.6.0/24 | 100 | 
+ |SW29| 10.4.5.29/24 |10.4.5.0/24 | 100|
   
  #### <a id=title1>2. Настроим ip адреса на каждом активном порту.</a>
 
@@ -167,41 +167,167 @@
    |R28	 |10.5.5.28/32 |
    |R32	 |10.5.6.32/32 |
   
-   Пример настройки Loopback (R15):
    
-    ```
-    interface Loopback0
-     ip address 10.5.0.15 255.255.255.0
-    end
-  
-
-
-    Таблица vlan/IP адресов управления для коммутаторов: 
-  
-    | device | IP address | VLAN | gateway | 
-    | ------|---------| ------ | ----- |
-    | SW2 | 10.5.0.2/24 | 100 | 10.5.0.254 | 
-    |SW3 | 10.5.0.3/24 | 100 | 10.5.0.254 | 
-    |SW4 | 10.5.0.4/24 | 100 | N/A |
-    |SW5 |  10.5.0.5/24 | 100 | N/A |  
-    | SW9 | 10.5.6.9/24 | 100 | 10.5.6.254 | 
-    |SW10 | 10.5.6.10/24 | 100 | 10.5.6.254 | 
-    |SW29 |  10.5.5.29/24 | 100 | 10.5.5.254 | 
-
-  
-    Пример настройки management vlan на коммутаторах (SW5):
-  
-  
-    ```
-    interface Vlan100
-     ip address 10.5.0.5 255.255.255.0
-     vrrp 1 ip 10.5.0.254
-     vrrp 1 priority 254
-    end
-  
- 
-
+Пример настройки Loopback (R15):
    
+ ```   
+  interface Loopback0
+    ip address 10.5.0.15 255.255.255.0
+  end
+```        
+      
+Таблица vlan/IP адресов управления для коммутаторов: 
+    
+| device | IP address | VLAN | gateway | 
+| ------|---------| ------ | ----- |
+| SW2 | 10.4.0.2/24 | 100 | 10.4.0.254 | 
+|SW3 | 10.4.0.3/24 | 100 | 10.4.0.254 | 
+|SW4 | 10.4.0.4/24 | 100 | N/A |
+|SW5 |  10.4.0.5/24 | 100 | N/A |  
+| SW9 | 10.4.6.9/24 | 100 | 10.4.6.254 | 
+|SW10 | 10.4.6.10/24 | 100 | 10.4.6.254 | 
+|SW29 |  10.4.5.29/24 | 100 | 10.4.5.254 | 
+
+  
+Пример настройки management vlan на коммутаторах (SW5):
+
+  ```        
+  interface Vlan100
+    ip address 10.4.0.5 255.255.255.0
+  end
+  ```
+#### <a id=title5> 5. Настроим сети офисов так, чтобы не возникало broadcast штормов, а использование линков было максимально оптимизировано.</a> 
+
+**Москва:**
+
+Таблица vlan:
+
+|vlan id | name | 
+|----| ---|
+| 10 | HOST1 |
+| 20 | HOST2 |
+| 100 | MANAGEMENT |
+
+Для коммутатором SW2 SW3 SW4 SW5 настроим MSTP Следующим образом:
+
+Instance0 (vlan 10) SW4 root, красным показаны активные линки: 
+
+![instance0](https://github.com/MIranaNightshade/otus-networks/blob/main/lab4/jpeg/instance0.png)
+
+
+Instance1 (vlan 20, 100) SW5 root, красным показаны активные линки:
+
+![instance1](https://github.com/MIranaNightshade/otus-networks/blob/main/lab4/jpeg/instance1.png)
+
+
+[Конфиги в Москве можно посмотреть здесь](https://github.com/MIranaNightshade/otus-networks/tree/main/lab4/configs).
+
+Между SW4 и SW5 настроим агрегацию (e0/3,e0/2 = e0/3,e0/2), с помощью протокола LACP:
+
+пример настройки на SW5, на SW4 зеркальные настройки, выберем mode active с двух сторон:
+
+```
+!
+interface Ethernet0/2
+ switchport trunk allowed vlan 10,20,100
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+end
+
+SW5#show running-config interface e0/3
+Building configuration...
+
+Current configuration : 160 bytes
+!
+interface Ethernet0/3
+ switchport trunk allowed vlan 10,20,100
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+end
+
+SW5#show running-config interface po1
+Building configuration...
+
+Current configuration : 155 bytes
+!
+interface Port-channel1
+ switchport trunk allowed vlan 10,20,100
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ lacp fast-switchover
+end
+```
+
+Проверим работу LACP: 
+
+```
+SW5#show etherchannel summary
+Flags:  D - down        P - bundled in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+
+        M - not in use, minimum links not met
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 1
+Number of aggregators:           1
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SU)         LACP      Et0/2(P)    Et0/3(P)
+
+SW5#
+```
+
+Настроим VRRP между SW4 и SW5, таким образом чтобы во vlan 10 (VPC1) master был SW4, для vlan 20 (VPC7), vlan 100 (MANAGEMENT) master SW5:
+
+```
+SW5#show vrrp
+Vlan10 - Group 2
+  State is Backup
+  Virtual IP address is 172.16.0.254
+  Virtual MAC address is 0000.5e00.0102
+  Advertisement interval is 1.000 sec
+  Preemption enabled
+  Priority is 100
+  Master Router is 172.16.0.254, priority is 255
+  Master Advertisement interval is 1.000 sec
+  Master Down interval is 3.609 sec (expires in 3.074 sec)
+
+Vlan20 - Group 3
+  State is Master
+  Virtual IP address is 172.17.0.254
+  Virtual MAC address is 0000.5e00.0103
+  Advertisement interval is 1.000 sec
+  Preemption enabled
+  Priority is 255
+  Master Router is 172.17.0.254 (local), priority is 255
+  Master Advertisement interval is 1.000 sec
+  Master Down interval is 3.003 sec
+
+Vlan100 - Group 1
+  State is Master
+  Virtual IP address is 10.4.0.254
+  Virtual MAC address is 0000.5e00.0101
+  Advertisement interval is 1.000 sec
+  Preemption enabled
+  Priority is 254
+  Master Router is 10.4.0.5 (local), priority is 254
+  Master Advertisement interval is 1.000 sec
+  Master Down interval is 3.007 sec
+
+SW5#
+```
+[Конфиги в Москве можно посмотреть здесь](https://github.com/MIranaNightshade/otus-networks/tree/main/lab4/configs).
+
+**C.-Петербург:**
 
 
 
