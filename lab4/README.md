@@ -169,11 +169,11 @@
   
    Пример настройки Loopback (R15):
    
-  ```
+    ```
     interface Loopback0
      ip address 10.5.0.15 255.255.255.0
     end
-  ```
+  
 
 
     Таблица vlan/IP адресов управления для коммутаторов: 
@@ -192,14 +192,14 @@
     Пример настройки management vlan на коммутаторах (SW5):
   
   
-  ```
+    ```
     interface Vlan100
      ip address 10.5.0.5 255.255.255.0
      vrrp 1 ip 10.5.0.254
      vrrp 1 priority 254
     end
   
-   ```
+ 
 
    
 
