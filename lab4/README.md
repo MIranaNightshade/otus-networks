@@ -329,7 +329,15 @@ SW5#
 
 **C.-Петербург:**
 
+Таблица vlan:
 
+|vlan id | name | 
+|----| ---|
+| 10 | HOST1 |
+| 20 | HOST2 |
+| 100 | MANAGEMENT |
+
+[Конфиги в С.-Петербурге можно посмотреть здесь](https://github.com/MIranaNightshade/otus-networks/tree/main/lab4/configs/S.Peterburg)
 
   
 
