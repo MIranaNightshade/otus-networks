@@ -208,6 +208,15 @@
 | 20 | HOST2 |
 | 100 | MANAGEMENT |
 
+|device | IP | default gateway| vlan| 
+| ----- | --- | ----| --- |
+| VPC1 | 172.16.0.1/24 | 172.16.0.254(SW4,SW5) | 10 |
+| VPC7 |172.17.0.7/24 | 172.17.0.254 (SW4,SW5)| 20 |
+| SW2 | 10.4.0.2/24 | 10.4.0.254 (SW4,SW5) | 100 |
+| SW3 | 10.4.6.3/24 | 10.4.0.254 (SW4,SW5) | 100 |
+| SW4 | 10.4.0.4/24 | N/A | 100 |
+| SW5 | 10.4.0.5/24 | N/A| 100 |
+
 Для коммутатором SW2 SW3 SW4 SW5 настроим MSTP Следующим образом:
 
 Instance0 (vlan 10) SW4 root, красным показаны активные линки: 
@@ -337,9 +346,116 @@ SW5#
 | 20 | HOST2 |
 | 100 | MANAGEMENT |
 
-Настроим VRRP между R17 и R16 так чтобы для vlan 10 (HOST1) master был 
+|device | IP | default gateway| vlan| 
+| ----- | --- | ----| --- |
+| VPC8 | 172.16.6.8/24 | 172.16.6.254(R16,R17) | 10 |
+| VPC33 |172.17.6.33/24 | 172.17.6.254 (R16,R17)| 20 |
+| SW9 | 10.4.6.9/24 | 10.4.6.254 (R16,R17) | 100 |
+| SW10 | 10.4.6.10/24 | 10.4.6.254 (R16,R17) | 100 |
+
+Настроим VRRP между R17 и R16 так чтобы для vlan 10 (HOST1) master был R17, а для vlan 20, 100 master R16:
+Проверим статус VRRP на R16:
+
+```
+R16#         show vrrp
+Ethernet0/0.10 - Group 1
+  State is Backup
+  Virtual IP address is 172.16.6.254
+  Virtual MAC address is 0000.5e00.0101
+  Advertisement interval is 1.000 sec
+  Preemption enabled
+  Priority is 100
+  Master Router is 172.16.6.254, priority is 255
+  Master Advertisement interval is 1.000 sec
+  Master Down interval is 3.609 sec (expires in 3.325 sec)
+
+Ethernet0/0.20 - Group 2
+  State is Master
+  Virtual IP address is 172.17.6.254
+  Virtual MAC address is 0000.5e00.0102
+  Advertisement interval is 1.000 sec
+  Preemption enabled
+  Priority is 255
+  Master Router is 172.17.6.254 (local), priority is 255
+  Master Advertisement interval is 1.000 sec
+  Master Down interval is 3.003 sec
+
+Ethernet0/0.100 - Group 3
+  State is Master
+  Virtual IP address is 10.4.6.254
+  Virtual MAC address is 0000.5e00.0103
+  Advertisement interval is 1.000 sec
+  Preemption enabled
+  Priority is 255
+  Master Router is 10.4.6.254 (local), priority is 255
+  Master Advertisement interval is 1.000 sec
+  Master Down interval is 3.003 sec
+
+R16#
+```
+
+Настроим LACP между SW9 SW10, потому же принципу как в Москве:
+
+```
+!
+interface Port-channel1
+ switchport trunk allowed vlan 10,20,100
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/0
+ switchport trunk allowed vlan 10,20,100
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+!
+interface Ethernet0/1
+ switchport trunk allowed vlan 10,20,100
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ channel-group 1 mode active
+!
+
+```
 
 [Конфиги в С.-Петербурге можно посмотреть здесь](https://github.com/MIranaNightshade/otus-networks/tree/main/lab4/configs/S.Peterburg)
+
+
+**Чокурдах**
+
+|vlan id | name | 
+|----| ---|
+| 10 | HOST1 |
+| 20 | HOST2 |
+| 100 | MANAGEMENT |
+
+|device | IP | default gateway| vlan| 
+| ----- | --- | ----| --- |
+| VPC30 | 172.16.5.8/24 | 172.16.5.254(R28) | 10 |
+| VPC31 |172.17.5.33/24 | 172.17.5.254 (R28)| 20 |
+| SW29 | 10.4.5.9/24 | 10.4.5.254 (R28) | 100 |
+
+Настроим вланы 10, 20 на коммутаторе SW29 access в строну VPC, trunk в сторону R28.
+Настроим Router on a stick на R28:
+
+```
+!
+interface Ethernet0/2.10
+ encapsulation dot1Q 10
+ ip address 172.16.5.254 255.255.255.0
+!
+interface Ethernet0/2.20
+ encapsulation dot1Q 20
+ ip address 172.17.5.254 255.255.255.0
+!
+interface Ethernet0/2.100
+ encapsulation dot1Q 100
+ ip address 10.4.5.254 255.255.255.0
+!
+```
+[Все конфиги в Чокурдахе здесь](https://github.com/MIranaNightshade/otus-networks/tree/main/lab4/configs/Chokurdah)
+
+
 
   
 
