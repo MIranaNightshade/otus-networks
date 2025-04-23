@@ -1,0 +1,185 @@
+R28(config)#do sh run
+Building configuration...
+
+Current configuration : 2515 bytes
+!
+! Last configuration change at 17:43:49 UTC Wed Apr 23 2025
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R28
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+redundancy
+!
+!
+track 1 ip sla 1 reachability
+ delay down 10 up 30
+!
+track 2 ip sla 2 reachability
+ delay down 10 up 30
+!
+track 10 interface Ethernet0/0 line-protocol
+ delay down 10 up 30
+!
+track 20 interface Ethernet0/1 line-protocol
+ delay down 10 up 30
+!
+track 100 list boolean and
+ object 1
+ object 10
+!
+track 200 list boolean and
+ object 2
+ object 20
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.5.28 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 94.30.3.30 255.255.255.252
+!
+interface Ethernet0/1
+ ip address 94.30.3.26 255.255.255.252
+!
+interface Ethernet0/2
+ no ip address
+!
+interface Ethernet0/2.10
+ encapsulation dot1Q 10
+ ip address 172.16.5.254 255.255.255.0
+ ip policy route-map FOR_VPC30
+!
+interface Ethernet0/2.20
+ encapsulation dot1Q 20
+ ip address 172.17.5.254 255.255.255.0
+ ip policy route-map FOR_VPC31
+!
+interface Ethernet0/2.100
+ encapsulation dot1Q 100
+ ip address 10.4.5.254 255.255.255.0
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+ip sla 1
+ icmp-echo 94.30.3.29
+ threshold 300
+ timeout 2000
+ frequency 3
+ip sla schedule 1 life forever start-time now
+ip sla 2
+ icmp-echo 94.30.3.25
+ threshold 300
+ timeout 2000
+ frequency 3
+ip sla schedule 2 life forever start-time now
+!
+route-map FOR_VPC30 permit 10
+ match ip address 1
+ set ip next-hop verify-availability 94.30.3.29 20 track 100
+ set ip next-hop verify-availability 94.30.3.25 30 track 200
+!
+route-map FOR_VPC31 permit 10
+ match ip address 2
+ set ip next-hop verify-availability 94.30.3.25 20 track 200
+ set ip next-hop verify-availability 94.30.3.29 30 track 100
+!
+!
+access-list 1 permit 172.16.5.0 0.0.0.255
+access-list 2 permit 172.17.5.0 0.0.0.255
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+!
+end
