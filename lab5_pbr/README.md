@@ -156,7 +156,7 @@ interface Ethernet0/2.20
 | device | port | ip address|
 |----| ----| ---- |
 | R25 | e0/1 | 94.30.3.17/30 |
-|R 27| e0/0 | 94.30.3.18/30 |
+|R27| e0/0 | 94.30.3.18/30 |
 
 Настройки default-gateway на R27:
 
