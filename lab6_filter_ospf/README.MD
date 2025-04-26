@@ -321,7 +321,7 @@ O IA     172.17.0.0 [110/31] via 10.7.0.37, 00:25:57, Ethernet0/0
 R20#
 ```
 
-[ВСЕ КОНФИГИ ПОЛНОСТЬЮ МОЖН ОПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/blob/main/lab6_filter_ospf/configs)
+[ВСЕ КОНФИГИ ПОЛНОСТЬЮ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/blob/main/lab6_filter_ospf/configs/)
 
 
 
