@@ -17,7 +17,7 @@
 #### <a id=title1> 1. Разработаем и задокументируем адресное пространство для лабораторного стенда.</a>
   Схема сети:
   
- ![схема сети](https://github.com/MIranaNightshade/otus-networks/blob/main/lab4/jpeg/%D1%81%D1%85%D0%B5%D0%BC%D0%B0%20%D1%81%D0%B5%D1%82%D0%B8.png)
+ ![схема сети](https://github.com/MIranaNightshade/otus-networks/blob/main/lab4/jpeg/_%D1%81%D1%85%D0%B5%D0%BC%D0%B0_%D1%81%D0%B5%D1%82%D0%B8_.png)
   
   
   Будем использовать следующие подсети: 
