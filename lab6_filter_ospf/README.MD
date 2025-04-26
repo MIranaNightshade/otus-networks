@@ -16,9 +16,9 @@
 
 ![Москва ospf](https://github.com/MIranaNightshade/otus-networks/blob/main/lab6_filter_ospf/jpeg/area%20OSPF.png)
 
-Таблица OSPF-id роутеров:
+Таблица ospf router-id:
 
-| device | ospf-id | 
+| device | router-id | 
 |-----| ----| 
 |R14 | 14.14.14.14 |
 |R15 | 15.15.15.15 |
