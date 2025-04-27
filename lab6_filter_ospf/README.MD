@@ -38,11 +38,10 @@
 interface Loopback0
  ip address 10.5.0.14 255.255.255.255
 !
-
 !
-interface Ethernet0/1
- ip address 10.7.0.30 255.255.255.252
- ip ospf 1 area 10
+interface Ethernet1/0
+ ip address 10.7.0.57 255.255.255.252
+ ip ospf 1 area 0
 !
 !
 router ospf 1
