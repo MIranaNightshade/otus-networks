@@ -191,7 +191,7 @@ R26:
 
 ![R26](https://github.com/MIranaNightshade/otus-networks/blob/main/lab7_isis/jpeg/R26_nei.png)
 
-**Проверим связность, пропинговав с R23 IP адреса Loopback интерфейсов R24, R25, R26:
+**Проверим связность, пропинговав с R23 IP адреса Loopback интерфейсов R24, R25, R26:**
 
 ![R23_ping](https://github.com/MIranaNightshade/otus-networks/blob/main/lab7_isis/jpeg/R23_ping.png)
 
