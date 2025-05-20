@@ -1,0 +1,352 @@
+R25#show  running-config
+Building configuration...
+
+Current configuration : 1398 bytes
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R25
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.3.25 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 94.30.3.2 255.255.255.252
+ ip router isis
+ isis network point-to-point
+!
+interface Ethernet0/1
+ ip address 94.30.3.17 255.255.255.252
+!
+interface Ethernet0/2
+ ip address 94.30.3.21 255.255.255.252
+ ip router isis
+ isis network point-to-point
+!
+interface Ethernet0/3
+ ip address 94.30.3.25 255.255.255.252
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router isis
+ net 49.2222.0000.0000.0025.00
+ is-type level-2-only
+ passive-interface Ethernet0/1
+ passive-interface Ethernet0/3
+ passive-interface Loopback0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+!
+end
+
+R25#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+R25 con0 is now available
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+R25>
+R25>
+R25>ena
+R25#sh
+R25#show  isis nei
+
+System Id      Type Interface   IP Address      State Holdtime Circuit Id
+R23            L2   Et0/0       94.30.3.1       UP    25       01
+R26            L2   Et0/2       94.30.3.22      UP    22       01
+R25#
+R25#
+R25#
+R25#P7P?
+% Unrecognized command
+R25#ping 10.5.3.24
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.5.3.24, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R25#ping 10.5.3.25
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.5.3.25, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 4/4/5 ms
+R25#ping 10.5.3.26
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.5.3.26, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+R25#
+R25#
+R25#sh
+R25#show  run
+R25#show  running-config
+Building configuration...
+
+Current configuration : 1398 bytes
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R25
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.3.25 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 94.30.3.2 255.255.255.252
+ ip router isis
+ isis network point-to-point
+!
+interface Ethernet0/1
+ ip address 94.30.3.17 255.255.255.252
+!
+interface Ethernet0/2
+ ip address 94.30.3.21 255.255.255.252
+ ip router isis
+ isis network point-to-point
+!
+interface Ethernet0/3
+ ip address 94.30.3.25 255.255.255.252
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router isis
+ net 49.2222.0000.0000.0025.00
+ is-type level-2-only
+ passive-interface Ethernet0/1
+ passive-interface Ethernet0/3
+ passive-interface Loopback0
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+!
+end
+
+R25#
