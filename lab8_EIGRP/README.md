@@ -170,7 +170,7 @@
 **Проверим связность отправив ping до конечных хостов, роутер loopback и management интерфейсов коммутаторов:**
 
 
-![PING](https://github.com/MIranaNightshade/otus-networks/blob/main/lab8_EIGRP/jpeg/R18_PING.png)
+![PING](https://github.com/MIranaNightshade/otus-networks/blob/main/lab8_EIGRP/jpeg/R18_PING_.png)
 
 
 
