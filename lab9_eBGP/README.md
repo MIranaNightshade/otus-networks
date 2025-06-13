@@ -253,7 +253,8 @@ ip route 94.30.3.0 255.255.255.0 Null0
 
 **Проверим bgp соседей на R18 (С.-Петербург AS2042 c Триада AS520):**
 
-![R18nei](https://github.com/MIranaNightshade/otus-networks/upload/main/lab9_eBGP/jpeg/R18_nei)
+![R18_nei](https://github.com/MIranaNightshade/otus-networks/upload/main/lab9_eBGP/jpeg/R18_nei)
+
 
 [ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab9_eBGP/all_config)
 
