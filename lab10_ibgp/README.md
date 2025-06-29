@@ -129,7 +129,7 @@ route-map FILTER permit 10
 ![neighbours R14 R15](https://github.com/MIranaNightshade/otus-networks/blob/main/lab10_ibgp/jpeg/nei_R15_R14.png)
 
 
-**[ВСЕ КОНФИГИ МОЖН ОПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab10_ibgp/all_config)**
+**[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab10_ibgp/all_config)**
 
 
 #### <a id=2>Настроим iBGP в провайдере Триада, с использованием RR.</a>
@@ -180,7 +180,7 @@ R24#
 
 ![neighbours R23](https://github.com/MIranaNightshade/otus-networks/blob/main/lab10_ibgp/jpeg/nei_R23.png)
 
-**[ВСЕ КОНФИГИ МОЖН ОПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab10_ibgp/all_config)**
+**[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab10_ibgp/all_config)**
 
 #### <a id=3> Настроим офис Москва так, чтобы приоритетным провайдером стал Ламас.</a>
 
@@ -263,7 +263,7 @@ route-map PREPEND permit 10
 
 ![R22 routes](https://github.com/MIranaNightshade/otus-networks/blob/main/lab10_ibgp/jpeg/R22_routes_bgp.png)
 
-**[ВСЕ КОНФИГИ МОЖН ОПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab10_ibgp/all_config)**
+**[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab10_ibgp/all_config)**
 
 
 #### <a id=4> Настроим офис С.-Петербург так, чтобы трафик до любого офиса распределялся по двум линкам одновременно.</a>
@@ -321,7 +321,7 @@ R28:
 
 ![R28 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab10_ibgp/jpeg/R28_ping_ibgp.png)
 
-**[ВСЕ КОНФИГИ МОЖН ОПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab10_ibgp/all_config)**
+**[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab10_ibgp/all_config)**
 
   
 
