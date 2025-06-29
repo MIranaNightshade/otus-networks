@@ -234,18 +234,23 @@ ip route 0.0.0.0 0.0.0.0 Null0
 
 
 R14:
+
 ![R14 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R14_check.png)
 
 R15:
+
 ![R15 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R15_check.png)
 
 R18: 
+
 ![R18 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R18_check.png)
 
 R27:
+
 ![R27 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R27_check.png)
 
 R28:
+
 ![R28 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R28_check.png)
 
 
