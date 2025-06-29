@@ -1,0 +1,151 @@
+R18#show  running-config
+Building configuration...
+
+Current configuration : 1853 bytes
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R18
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.6.18 255.255.255.255
+!
+interface Loopback1
+ ip address 100.30.6.18 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 10.7.0.42 255.255.255.252
+!
+interface Ethernet0/1
+ ip address 10.7.0.54 255.255.255.252
+!
+interface Ethernet0/2
+ ip address 94.30.3.14 255.255.255.252
+!
+interface Ethernet0/3
+ ip address 94.30.3.34 255.255.255.252
+!
+!
+router eigrp PETERBURG
+ !
+ address-family ipv4 unicast autonomous-system 100
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Ethernet0/0
+   no passive-interface
+  exit-af-interface
+  !
+  af-interface Ethernet0/1
+   no passive-interface
+  exit-af-interface
+  !
+  topology base
+   redistribute static
+  exit-af-topology
+  network 10.4.6.0 0.0.0.255
+  network 10.5.6.18 0.0.0.0
+  network 10.7.0.0 0.0.0.255
+  network 172.16.6.0 0.0.0.255
+  network 172.17.7.0 0.0.0.255
+  eigrp router-id 18.18.18.18
+ exit-address-family
+!
+router bgp 2042
+ bgp log-neighbor-changes
+ network 100.30.6.0 mask 255.255.255.0
+ neighbor 94.30.3.13 remote-as 520
+ neighbor 94.30.3.33 remote-as 520
+ maximum-paths 2
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 94.30.3.33
+ip route 0.0.0.0 0.0.0.0 94.30.3.13
+ip route 100.30.6.0 255.255.255.0 Null0
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+!
+end
+
+R18#
