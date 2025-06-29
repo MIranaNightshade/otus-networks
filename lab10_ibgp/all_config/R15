@@ -1,0 +1,172 @@
+R15#wr
+Building configuration...
+[OK]
+R15#sh
+R15#show  run
+R15#show  running-config
+Building configuration...
+
+Current configuration : 2364 bytes
+!
+! Last configuration change at 12:02:01 UTC Sun Jun 29 2025
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R15
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.0.15 255.255.255.0
+!
+interface Loopback1
+ ip address 100.30.0.15 255.255.255.255
+!
+interface Ethernet0/0
+ ip address 10.7.0.26 255.255.255.252
+ ip ospf 1 area 10
+!
+interface Ethernet0/1
+ ip address 10.7.0.14 255.255.255.252
+ ip ospf 1 area 10
+!
+interface Ethernet0/2
+ ip address 213.30.2.2 255.255.255.252
+!
+interface Ethernet0/3
+ ip address 10.7.0.37 255.255.255.252
+ ip ospf 1 area 102
+!
+interface Ethernet1/0
+ ip address 100.30.0.2 255.255.255.252
+ ip ospf 1 area 0
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+router ospf 1
+ router-id 15.15.15.15
+ area 102 filter-list prefix WITHOUT_R19 in
+ network 10.5.0.15 0.0.0.0 area 0
+ default-information originate
+!
+router bgp 1001
+ bgp log-neighbor-changes
+ network 100.30.0.0 mask 255.255.255.0
+ redistribute connected route-map FILTER
+ neighbor 10.5.0.14 remote-as 1001
+ neighbor 10.5.0.14 update-source Loopback0
+ neighbor 10.5.0.14 next-hop-self
+ neighbor 213.30.2.1 remote-as 301
+ neighbor 213.30.2.1 prefix-list AS1001_SUM out
+ neighbor 213.30.2.1 route-map TO_LAMAS in
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip route 100.30.0.0 255.255.255.0 Null0 210
+!
+!
+ip prefix-list AS1001_SUM seq 10 permit 0.0.0.0/0 le 24
+!
+ip prefix-list FILTER seq 5 deny 10.0.0.0/8 le 32
+ip prefix-list FILTER seq 10 permit 0.0.0.0/0 le 32
+!
+ip prefix-list WITHOUT_R19 seq 5 deny 10.5.0.19/32
+ip prefix-list WITHOUT_R19 seq 10 deny 10.7.0.32/30 le 32
+ip prefix-list WITHOUT_R19 seq 15 permit 0.0.0.0/0 le 32
+!
+route-map FILTER permit 10
+ match ip address prefix-list FILTER
+!
+route-map TO_LAMAS permit 10
+ set local-preference 200
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+!
+end
+
+R15#
