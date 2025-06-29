@@ -31,9 +31,11 @@
   | Расположение | маршрутизатор | интерфейс | IP адрес | сеть   |  направление |
   | ---- |----           | ----      | ----     | -------| -----        | 
   | Москва| R14 | e0/2 | 176.30.1.2/30|176.30.1.0/30| to R22 |
-   Москва | R14 |  lo1 | 100.30.0.14/32| 100.30.0.14/32 | - |
+  | Москва| R14 | e1/0 | 100.30.0.1/30|100.30.0.0/30| to R15 |
+ |  Москва | R14 |  lo1 | 100.30.0.14/32| 100.30.0.14/32 | - |
  | Москва | R15 |  e0/2 | 213.30.2.2/30| 213.30.2.0/30| to R21|
  | Москва | R15 |  lo1 | 100.30.0.15/32| 100.30.0.15/32 | - |
+ | Москва| R15 | e1/0 | 100.30.0.2/30|100.30.0.0/30| to R14 |
   | Ламас| R21 |  e0/0 | 213.30.2.1/30 | 213.30.2.0/30 | to R15 |
  | Ламас | R21 | e0/1 | 213.30.2.5/30 | 213.30.2.4/30 | to R22  |
  | Ламас | R21 | e0/2 | 213.30.2.9/30 | 213.30.2.8/30 | to R24 | 
@@ -288,6 +290,26 @@ R18#
   | Лабытнанги   | R27 |  e0/0 |94.30.3.18/30 |
 
 
-  R14:
+R14:
+
+![R14 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab10_ibgp/jpeg/R14_ping_ibgp.png)
+
+R15:
+
+![R15 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab10_ibgp/jpeg/R15_ping_ibgp.png)
+
+R18:
+
+![R18 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab10_ibgp/jpeg/R18_ping_ibgp.png)
+
+R27:
+
+![R27 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab10_ibgp/jpeg/R27_ping_ibgp.png)
+
+R28:
+
+![R28 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab10_ibgp/jpeg/R28_ping_ibgp.png)
 
   
+
+
