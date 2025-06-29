@@ -122,6 +122,9 @@ R15:
 
 ![R15 anonce](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R15_anonce.png)
 
+
+**[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab11_bgp_filter/all_config)**
+
 #### <a id=2>Настроим фильтрацию в офисе С.-Петербург так, чтобы не появилось транзитного трафика(Prefix-list)</a>
 
 *Чтобы не появлялось транзитного траффика нам нужно анонсировать соседям только сети принадлежащие нашей AS*
@@ -153,6 +156,9 @@ ip prefix-list NO_TRANSITE seq 5 permit 100.30.6.0/24
 Проверим анонсы соседям на R18: 
 
 ![R18 anonce](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R18_anonce.png)
+
+
+**[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab11_bgp_filter/all_config)**
 
 
 #### <a id=3>Настроим провайдера Киторн так, чтобы в офис Москва отдавался только маршрут по умолчанию</a>
@@ -192,6 +198,8 @@ ip prefix-list DEFAULT_ROUTE seq 5 permit 0.0.0.0/0
 
 ![R14 receive](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R14_receive.png)
 
+**[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab11_bgp_filter/all_config)**
+
 #### <a id=4> Настроим провайдера Ламас так, чтобы в офис Москва отдавался только маршрут по умолчанию и префикс офиса С.-Петербург</a>
 
 Настройки на R21:
@@ -219,6 +227,8 @@ ip route 0.0.0.0 0.0.0.0 Null0
 Приверим на R15 маршруты пришедшие от R21 (213.30.2.1):
 
 ![R15 receive](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R15_receive.png)
+
+**[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab11_bgp_filter/all_config)**
 
 
 ####  <a id=5>проверим IP связность.</a>
@@ -253,6 +263,8 @@ R28:
 
 ![R28 check](https://github.com/MIranaNightshade/otus-networks/blob/main/lab11_bgp_filter/jpeg/R28_check.png)
 
+
+**[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab11_bgp_filter/all_config)**
 
 
 
