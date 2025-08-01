@@ -394,7 +394,7 @@ interface Vlan20
 
 Проверим работу DHCP:
 
-![r28 nat](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/VPC_DHCP.png)
+![r28 nat](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/VPS_DHCP.png)
 
 #### <a id=7> 7. Настроим NTP сервер на R12 и R13. Все устройства в офисе Москва должны синхронизировать время с R12 и R13.</a>
 
