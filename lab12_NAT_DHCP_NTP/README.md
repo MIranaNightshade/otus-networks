@@ -117,6 +117,9 @@ ip access-list extended USER_FOR_NAT
 ![r15 nat](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/R15_nat.png)
 
 
+[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab12_NAT_DHCP_NTP/all_config)
+
+
 #### <a id=2> 2. Настроим NAT(PAT) на R18. Трансляция должна осуществляться в пул из 5 адресов автономной системы AS2042. </a>
 
 Конфиг на R18:
@@ -154,6 +157,9 @@ ip access-list extended USER_FOR_NAT
 Проверим работу nat:
 
 ![r18 nat](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/R18_nat.png)
+
+
+[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab12_NAT_DHCP_NTP/all_config)
 
 #### <a id=3>Настроим статический NAT для R20 </a>
 Конфиг на R15:
@@ -195,6 +201,9 @@ R15#
 Проверим работу nat на R20:
 
 ![r20 nat](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/R20_nat.png)
+
+
+[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab12_NAT_DHCP_NTP/all_config)
 
 
 #### <a id=4> 4. Настроим NAT так, чтобы R19 был доступен с любого узла для удаленного управления.</a>
@@ -260,6 +269,8 @@ ip nat inside source static tcp 10.5.0.19 22 100.30.0.19 6262 extendable
 
 ![r19 ssh](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/ssh_R19.png)
 
+[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab12_NAT_DHCP_NTP/all_config)
+
 
 #### <a id=5> 5. Настроим статический NAT(PAT) для офиса Чокурдах.</a>
 
@@ -312,6 +323,8 @@ route-map E00 permit 10
 Проверим работу nat на R28:
 
 ![r28 nat](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/nat_R28.png)
+
+[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab12_NAT_DHCP_NTP/all_config)
 
 #### <a id=6> 6. Настроим IPv4 DHCP сервер в офисе Москва на маршрутизаторах R12 и R13. VPC1 и VPC7 должны получать сетевые настройки по DHCP.</a>
 
@@ -396,6 +409,8 @@ interface Vlan20
 
 ![r28 nat](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/VPS_DHCP.png)
 
+[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab12_NAT_DHCP_NTP/all_config)
+
 #### <a id=7> 7. Настроим NTP сервер на R12 и R13. Все устройства в офисе Москва должны синхронизировать время с R12 и R13.</a>
 
 Конфиг R12:
@@ -426,6 +441,8 @@ ntp server 10.5.0.13
 Проверка работы ntp:
 
 ![NTP](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/NTP.png)
+
+[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab12_NAT_DHCP_NTP/all_config)
 
 
 #### <a id=8>8. Проверим IP связность.</a>
@@ -458,6 +475,6 @@ ntp server 10.5.0.13
 ![SPB](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/SPB_ping.png)
 
 
-
+[ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab12_NAT_DHCP_NTP/all_config)
 
    
