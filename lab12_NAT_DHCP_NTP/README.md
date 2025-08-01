@@ -12,7 +12,7 @@
 
 [6. Настроить IPv4 DHCP сервер в офисе Москва на маршрутизаторах R12 и R13. VPC1 и VPC7 должны получать сетевые настройки по DHCP.](#6)
 
-[7. Настроить NTP сервер на R12 и R13. Все устройства в офисе Москва должны синхронизировать время с R12 и R13.](#7)
+[v](#7)
 
 [8. Все офисы в лабораторной работе должны иметь IP связность.](#8)
 
@@ -312,5 +312,151 @@ route-map E00 permit 10
 
 ![r28 nat](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/nat_R28.png)
 
-#### 6. Настроим IPv4 DHCP сервер в офисе Москва на маршрутизаторах R12 и R13. VPC1 и VPC7 должны получать сетевые настройки по DHCP.
+#### <a id=6> 6. Настроим IPv4 DHCP сервер в офисе Москва на маршрутизаторах R12 и R13. VPC1 и VPC7 должны получать сетевые настройки по DHCP.</a>
 
+*Разделим пулы DHCP так чтобы часть выдавал R12, а часть R13 для обеспечения отказоустойчивости*
+
+Настройки на R12:
+
+```
+!
+ip dhcp excluded-address 172.16.0.128 172.16.0.255
+ip dhcp excluded-address 172.17.0.128 172.17.0.255
+!
+ip dhcp pool USER16
+ network 172.16.0.0 255.255.255.0
+ default-router 172.16.0.254
+ dns-server 8.8.8.8 8.8.4.4
+!
+ip dhcp pool USER17
+ network 172.17.0.0 255.255.255.0
+ default-router 172.17.0.254
+ dns-server 8.8.8.8 8.8.4.4
+!
+```
+Настройки на R13:
+
+```
+!
+ip dhcp excluded-address 172.16.0.0 172.16.0.127
+ip dhcp excluded-address 172.17.0.0 172.17.0.127
+ip dhcp excluded-address 172.16.0.245 172.16.0.255
+ip dhcp excluded-address 172.17.0.245 172.17.0.255
+!
+ip dhcp pool USER16
+ network 172.16.0.0 255.255.255.0
+ default-router 172.16.0.254
+ dns-server 8.8.8.8 8.8.4.4
+!
+ip dhcp pool USER17
+ network 172.17.0.0 255.255.255.0
+ default-router 172.17.0.254
+ dns-server 8.8.8.8 8.8.4.4
+!
+```
+
+На SW4 и SW5 настроим DHCP-relay:
+
+SW4:
+```
+!
+interface Vlan10
+ ip address 172.16.0.254 255.255.255.0
+ ip helper-address 10.5.0.13
+ ip helper-address 10.5.0.12
+ vrrp 2 ip 172.16.0.254
+!
+interface Vlan20
+ ip address 172.17.0.253 255.255.255.0
+ ip helper-address 10.5.0.13
+ ip helper-address 10.5.0.12
+ vrrp 3 ip 172.17.0.254
+!
+```
+
+SW5:
+```
+!
+interface Vlan10
+ ip address 172.16.0.253 255.255.255.0
+ ip helper-address 10.5.0.13
+ ip helper-address 10.5.0.12
+ vrrp 2 ip 172.16.0.254
+!
+interface Vlan20
+ ip address 172.17.0.254 255.255.255.0
+ ip helper-address 10.5.0.13
+ ip helper-address 10.5.0.12
+ vrrp 3 ip 172.17.0.254
+!
+```
+
+Проверим работу DHCP:
+
+![r28 nat](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/VPC_DHCP.png)
+
+#### <a id=7> 7. Настроим NTP сервер на R12 и R13. Все устройства в офисе Москва должны синхронизировать время с R12 и R13.</a>
+
+Конфиг R12:
+
+```
+!
+ntp master 2
+ntp update-calendar
+!
+```
+
+Конфиг R13:
+
+```
+!
+ntp master 2
+ntp update-calendar
+!
+```
+Пример настройки ntp-клиента:
+
+```
+!
+ntp server 10.5.0.12 prefer
+ntp server 10.5.0.13
+!
+```
+Проверка работы ntp:
+
+![NTP](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/NTP.png)
+
+
+#### <a id=8>8. Проверим IP связность.</a>
+
+Таблица белых IP бордеров офисов:
+
+| роутер | интерфейс | ip адрес | расположение |
+|--------| ----------| ---------| ----------| 
+| r14 | Ethernet0/2 | 176.30.1.2 | Москва |
+| r14 | Ethernet1/0 | 100.30.0.1 | Москва |
+| r15 | Ethernet1/0 | 100.30.0.2| Москва |
+| r15 | Ethernet0/2 | 213.30.2.2 | Москва |
+| r18 | Ethernet0/2 |94.30.3.14| C.Петербург|
+| r18 | Ethernet0/3 |94.30.3.34| C.Петербург|
+| r28 | Ethernet0/0 |94.30.3.30| Чокурдах |
+| r28 | Ethernet0/1 |94.30.3.26| Чокурдах |
+
+Проверим связность с конечных хостов до бордеров:
+
+С офиса Чокурдах до МСК и СПБ:
+
+![Chokurdah](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/Chokur_ping.png)
+
+С МСК до СПБ и Чокурдах:
+
+![MSK](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/MSK_ping.png)
+
+С СПБ до МСК и Чокурдах:
+
+![SPB](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/SPB_ping.png)
+
+
+
+
+   
