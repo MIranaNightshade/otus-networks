@@ -267,7 +267,7 @@ ip nat inside source static tcp 10.5.0.19 22 100.30.0.19 6262 extendable
 
 Подключимся к R19 по ssh c R18:
 
-![r19 ssh](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/ssh_R19.png)
+![r19 ssh](https://github.com/MIranaNightshade/otus-networks/blob/main/lab12_NAT_DHCP_NTP/jpeg/SSH_R19.png)
 
 [ВСЕ КОНФИГИ МОЖНО ПОСМОТРЕТЬ ЗДЕСЬ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab12_NAT_DHCP_NTP/all_config)
 
