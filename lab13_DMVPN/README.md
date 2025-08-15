@@ -14,6 +14,9 @@
 
 #### <a id=1>1.Настроим GRE между офисами Москва и С.-Петербург.</a>
 ***Построим до R18 (С.-Петербург), два GRE туннеля от R14 и R15 (Москва) для обеспечения отказоустойчивости***
+
+![GRE](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/GRE_map.png)
+
 Настройки на R14:
 
 ```
@@ -50,13 +53,16 @@ end
 ```
 
 Проверим работу туннелей:
-![GRE](https://github.com/MIranaNightshade/otus-networks/tree/main/lab13_DMVPN/jpeg/GRE.png)
+
+![GRE](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/GRE.png)
 
 #### <a id=2>2. Настроим DMVMN между Москва и Чокурдах, Лабытнанги.</a>
 
 Настроим два облака DMVPN для обеспечения отказоустойчивости.
 R14, R15 настраиваем как hub.
 R27, R28 как spoke.
+
+![DMVPN](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/DMVPN.png)
 
 Настройки на R14:
 
@@ -157,6 +163,8 @@ interface Tunnel1
 #### <a id=2>3. Настроим IP связность между офисами через туннели с помощью EIGRP.</a>
 
 ***EIGRP через GRE будет в AS100, через DMVPN в AS200, при редистрибьюции OSPF отфильтруем линковочные подсети 10.7.0.0/24 с помощью route-map***
+
+![EIGRP](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/EIGRP_map.png)
 
 **Настройки EIGRP на R14:**
 
