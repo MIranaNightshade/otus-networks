@@ -306,7 +306,7 @@ route-map FOR_EIGRP_ALL permit 10
 
 **Настройки EIGRP на R18:**
 
-'''
+```
 R18#show  running-config | s r e
 router eigrp PETERBURG
  !
@@ -347,7 +347,7 @@ router eigrp PETERBURG
   eigrp router-id 18.18.18.18
  exit-address-family
 R18#
-``
+```
 
 **Настройки EIGRP на R27:**
 
@@ -415,6 +415,49 @@ router eigrp ALL1
   network 172.17.5.0 0.0.0.255
  exit-address-family
 ```
+
+**Проверим связность:**
+
+МСК-СПБ
+
+![1](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/MSK_SPB.png)
+
+МСК-ЧОКУРДАХ
+
+![2](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/MSK_CHOKUR.png)
+
+МСК-ЛАБЫТНАНГИ
+
+![3](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/MSK_LABIT.png)
+
+СПБ-ЧОКУРДАХ, СПБ-ЛАБЫТНАНГИ
+
+![4](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/SPB_CHOKUR_LABIT.png)
+
+ЛАБЫТНАНГИ-ЧОКУРДАХ
+
+![5](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/CHOKUR_LABIT.png)
+
+**Таблицы маршрутизации на бордерах:**
+МСК:
+
+![6](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/R14_route.png)
+![7](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/R15_route.png)
+
+СПБ:
+
+![8](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/R18_route.png)
+
+Чокурдах:
+
+![9](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/R28_route.png)
+
+Лабытнанги:
+
+![10](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/R27_route.png)
+
+
+
 
 
 
