@@ -156,9 +156,9 @@ interface Tunnel1
 
 Проверим работу туннелей:
 
-![DMVPN_R14](https://github.com/MIranaNightshade/otus-networks/upload/main/lab13_DMVPN/jpeg/DMVPN_R14)
+![DMVPN_R14](https://github.com/MIranaNightshade/otus-networks/upload/main/lab13_DMVPN/jpeg/DMVPN_R14.png)
 
-![DMVPN_R15](https://github.com/MIranaNightshade/otus-networks/upload/main/lab13_DMVPN/jpeg/DMVPN_R15)
+![DMVPN_R15](https://github.com/MIranaNightshade/otus-networks/upload/main/lab13_DMVPN/jpeg/DMVPN_R15.png)
 
 #### <a id=2>3. Настроим IP связность между офисами через туннели с помощью EIGRP.</a>
 
