@@ -56,6 +56,8 @@ end
 
 ![GRE](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/GRE.png)
 
+[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab13_DMVPN/all_config)
+
 #### <a id=2>2. Настроим DMVMN между Москва и Чокурдах, Лабытнанги.</a>
 
 Настроим два облака DMVPN для обеспечения отказоустойчивости.
@@ -159,6 +161,8 @@ interface Tunnel1
 ![DMVPN_R14](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/DMVPN_R14.png)
 
 ![DMVPN_R15](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/DMVPN_R15.png)
+
+[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab13_DMVPN/all_config)
 
 #### <a id=3>3. Настроим IP связность между офисами через туннели с помощью EIGRP.</a>
 
@@ -456,7 +460,7 @@ router eigrp ALL1
 
 ![10](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/R27_route.png)
 
-
+[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab13_DMVPN/all_config)
 
 
 
