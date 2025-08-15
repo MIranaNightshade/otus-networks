@@ -36,6 +36,7 @@ interface Tunnel0
 
 Настройки на R18:
 
+
 ```
 !
 interface Tunnel0
@@ -49,7 +50,6 @@ interface Tunnel1
  tunnel source 100.30.6.18
  tunnel destination 100.30.0.215
 end
-
 ```
 
 Проверим работу туннелей:
