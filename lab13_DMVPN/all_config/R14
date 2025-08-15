@@ -1,0 +1,286 @@
+R14#show  running-config
+Building configuration...
+
+Current configuration : 5507 bytes
+!
+! No configuration change since last restart
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R14
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.0.14 255.255.255.255
+!
+interface Loopback1
+ ip address 100.30.0.19 255.255.255.255
+!
+interface Loopback2
+ ip address 100.30.0.14 255.255.255.255
+!
+interface Loopback3
+ ip address 100.30.0.114 255.255.255.255
+!
+interface Loopback4
+ ip address 100.30.0.214 255.255.255.255
+!
+interface Tunnel0
+ ip address 10.10.1.14 255.255.255.0
+ tunnel source 100.30.0.214
+ tunnel destination 100.30.6.18
+!
+interface Tunnel1
+ ip address 10.10.3.14 255.255.255.0
+ no ip redirects
+ ip nhrp map multicast dynamic
+ ip nhrp network-id 1414
+ tunnel source 100.30.0.114
+ tunnel mode gre multipoint
+ tunnel key 1414
+!
+interface Tunnel10
+ no ip address
+ tunnel source Ethernet0/2
+!
+interface Ethernet0/0
+ ip address 10.7.0.10 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 10
+!
+interface Ethernet0/1
+ ip address 10.7.0.30 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 10
+!
+interface Ethernet0/2
+ ip address 176.30.1.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+!
+interface Ethernet0/3
+ ip address 10.7.0.33 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 101
+!
+interface Ethernet1/0
+ ip address 100.30.0.1 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+!
+router eigrp ALL
+ !
+ address-family ipv4 unicast autonomous-system 100
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel0
+   summary-address 10.4.0.0 255.255.255.0
+   summary-address 10.5.0.0 255.255.255.0
+   summary-address 172.16.0.0 255.255.255.0
+   summary-address 172.17.0.0 255.255.255.0
+   no passive-interface
+  exit-af-interface
+  !
+  topology base
+   redistribute ospf 1 metric 100000 10 255 1 1500 route-map FOR_EIGRP_ALL
+   redistribute eigrp 200
+  exit-af-topology
+  network 10.4.0.0 0.0.0.255
+  network 10.5.0.0 0.0.0.255
+  network 10.10.1.0 0.0.0.255
+  network 172.16.0.0 0.0.0.255
+  network 172.17.0.0 0.0.0.255
+ exit-address-family
+!
+!
+router eigrp ALL1
+ !
+ address-family ipv4 unicast autonomous-system 200
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel1
+   summary-address 10.4.0.0 255.255.255.0
+   summary-address 10.5.0.0 255.255.255.0
+   summary-address 172.16.0.0 255.255.255.0
+   summary-address 172.17.0.0 255.255.255.0
+   no next-hop-self
+   no passive-interface
+   no split-horizon
+  exit-af-interface
+  !
+  topology base
+   redistribute eigrp 100 route-map NEXTHOP_SELF
+   redistribute ospf 1 metric 100000 10 255 1 1500 route-map FOR_EIGRP_ALL
+  exit-af-topology
+  network 10.4.0.0 0.0.0.255
+  network 10.5.0.0 0.0.0.255
+  network 10.10.3.0 0.0.0.255
+  network 172.16.0.0 0.0.0.255
+  network 172.17.0.0 0.0.0.255
+ exit-address-family
+!
+router ospf 1
+ router-id 14.14.14.14
+ area 101 stub no-summary
+ redistribute eigrp 100 subnets
+ redistribute eigrp 200 subnets
+ network 10.5.0.14 0.0.0.0 area 0
+ default-information originate
+!
+router bgp 1001
+ bgp log-neighbor-changes
+ network 100.30.0.0 mask 255.255.255.0
+ redistribute connected route-map FILTER
+ neighbor 10.5.0.15 remote-as 1001
+ neighbor 10.5.0.15 update-source Loopback0
+ neighbor 10.5.0.15 next-hop-self
+ neighbor 176.30.1.1 remote-as 101
+ neighbor 176.30.1.1 prefix-list AS1001_SUM out
+ neighbor 176.30.1.1 route-map PREPEND out
+ neighbor 176.30.1.1 filter-list 1 out
+!
+ip forward-protocol nd
+!
+ip as-path access-list 1 permit ^$
+!
+no ip http server
+no ip http secure-server
+ip nat pool IP_NAT 100.30.0.14 100.30.0.14 netmask 255.255.255.0
+ip nat inside source list USER_FOR_NAT pool IP_NAT overload
+ip nat inside source static tcp 10.5.0.19 22 100.30.0.19 6262 extendable
+ip route 100.30.0.0 255.255.255.0 Null0 210
+!
+ip access-list extended USER_FOR_NAT
+ deny   ip 172.16.0.0 0.0.0.255 172.16.0.0 0.0.255.255
+ deny   ip 172.16.0.0 0.0.0.255 172.17.0.0 0.0.255.255
+ deny   ip 172.17.0.0 0.0.0.255 172.16.0.0 0.0.255.255
+ deny   ip 172.17.0.0 0.0.0.255 172.17.0.0 0.0.255.255
+ deny   ip 172.16.0.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny   ip 172.17.0.0 0.0.0.255 10.0.0.0 0.255.255.255
+ permit ip 172.16.0.0 0.0.0.255 any
+ permit ip 172.17.0.0 0.0.0.255 any
+!
+!
+ip prefix-list AS1001_SUM seq 10 permit 0.0.0.0/0 le 24
+!
+ip prefix-list FILTER seq 5 deny 10.0.0.0/8 le 32
+ip prefix-list FILTER seq 10 permit 0.0.0.0/0 le 32
+!
+ip prefix-list FOR_EIGRP_ALL seq 5 deny 10.7.0.0/24 le 32
+ip prefix-list FOR_EIGRP_ALL seq 10 permit 0.0.0.0/0 le 32
+!
+route-map FILTER permit 10
+ match ip address prefix-list FILTER
+!
+route-map NEXTHOP_SELF permit 10
+ set ip next-hop self
+!
+route-map FOR_EIGRP_ALL permit 10
+ match ip address prefix-list FOR_EIGRP_ALL
+!
+route-map PREPEND permit 10
+ set as-path prepend 1001 1001 1001 1001 1001 1001
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+ntp server 10.5.0.12 prefer
+ntp server 10.5.0.13
+!
+end
+
+R14#
