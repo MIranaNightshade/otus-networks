@@ -1,0 +1,297 @@
+R15#show  running-config
+Building configuration...
+
+Current configuration : 5714 bytes
+!
+! Last configuration change at 15:39:11 UTC Fri Aug 15 2025
+!
+version 15.5
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R15
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+bsd-client server url https://cloudsso.cisco.com/as/token.oauth2
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+cts logging verbose
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.0.15 255.255.255.0
+!
+interface Loopback1
+ ip address 100.30.0.15 255.255.255.255
+!
+interface Loopback2
+ ip address 100.30.0.115 255.255.255.255
+!
+interface Loopback3
+ ip address 100.30.0.215 255.255.255.255
+!
+interface Tunnel0
+ ip address 10.10.2.15 255.255.255.0
+ tunnel source 100.30.0.215
+ tunnel destination 100.30.6.18
+!
+interface Tunnel1
+ ip address 10.10.4.15 255.255.255.0
+ no ip redirects
+ ip nhrp map multicast dynamic
+ ip nhrp network-id 1515
+ tunnel source 100.30.0.115
+ tunnel mode gre multipoint
+ tunnel key 1515
+!
+interface Ethernet0/0
+ ip address 10.7.0.26 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 10
+!
+interface Ethernet0/1
+ ip address 10.7.0.14 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 10
+!
+interface Ethernet0/2
+ ip address 213.30.2.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+!
+interface Ethernet0/3
+ ip address 10.7.0.37 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 102
+!
+interface Ethernet1/0
+ ip address 100.30.0.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+!
+router eigrp ALL
+ !
+ address-family ipv4 unicast autonomous-system 100
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel0
+   summary-address 10.4.0.0 255.255.255.0
+   summary-address 10.5.0.0 255.255.255.0
+   summary-address 172.16.0.0 255.255.255.0
+   summary-address 172.17.0.0 255.255.255.0
+   no passive-interface
+  exit-af-interface
+  !
+  topology base
+   redistribute ospf 1 metric 100000 10 255 1 1500 route-map FOR_EIGRP_ALL
+   redistribute eigrp 200
+  exit-af-topology
+  network 10.4.0.0 0.0.0.255
+  network 10.5.0.0 0.0.0.255
+  network 10.10.2.0 0.0.0.255
+  network 172.16.0.0 0.0.0.255
+  network 172.17.0.0 0.0.0.255
+ exit-address-family
+!
+!
+router eigrp ALL1
+ !
+ address-family ipv4 unicast autonomous-system 200
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel1
+   summary-address 10.4.0.0 255.255.255.0
+   summary-address 10.5.0.0 255.255.255.0
+   summary-address 172.16.0.0 255.255.255.0
+   summary-address 172.17.0.0 255.255.255.0
+   no next-hop-self
+   no passive-interface
+   no split-horizon
+  exit-af-interface
+  !
+  topology base
+   redistribute eigrp 100 route-map NEXTHOP_SELF
+   redistribute ospf 1 metric 100000 10 255 1 1500 route-map FOR_EIGRP_ALL
+  exit-af-topology
+  network 10.4.0.0 0.0.0.255
+  network 10.5.0.0 0.0.0.255
+  network 10.10.4.0 0.0.0.255
+  network 172.16.0.0 0.0.0.255
+  network 172.17.0.0 0.0.0.255
+ exit-address-family
+!
+router ospf 1
+ router-id 15.15.15.15
+ area 102 filter-list prefix WITHOUT_R19 in
+ redistribute eigrp 100 subnets
+ network 10.5.0.15 0.0.0.0 area 0
+ default-information originate
+!
+router bgp 1001
+ bgp log-neighbor-changes
+ network 100.30.0.0 mask 255.255.255.0
+ redistribute connected route-map FILTER
+ neighbor 10.5.0.14 remote-as 1001
+ neighbor 10.5.0.14 update-source Loopback0
+ neighbor 10.5.0.14 next-hop-self
+ neighbor 213.30.2.1 remote-as 301
+ neighbor 213.30.2.1 prefix-list AS1001_SUM out
+ neighbor 213.30.2.1 route-map TO_LAMAS in
+ neighbor 213.30.2.1 filter-list 1 out
+!
+ip forward-protocol nd
+!
+ip as-path access-list 1 permit ^$
+!
+no ip http server
+no ip http secure-server
+ip nat pool IP_NAT 100.30.0.15 100.30.0.15 netmask 255.255.255.0
+ip nat inside source list USER_FOR_NAT pool IP_NAT overload
+ip nat inside source static 10.5.0.20 100.30.0.15
+ip route 100.30.0.0 255.255.255.0 Null0 210
+!
+ip access-list standard TEST
+ permit 172.0.0.0 0.255.255.255
+!
+ip access-list extended USER_FOR_NAT
+ deny   ip 172.16.0.0 0.0.0.255 172.16.0.0 0.0.255.255
+ deny   ip 172.16.0.0 0.0.0.255 172.17.0.0 0.0.255.255
+ deny   ip 172.17.0.0 0.0.0.255 172.16.0.0 0.0.255.255
+ deny   ip 172.17.0.0 0.0.0.255 172.17.0.0 0.0.255.255
+ deny   ip 172.16.0.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny   ip 172.17.0.0 0.0.0.255 10.0.0.0 0.255.255.255
+ permit ip 172.16.0.0 0.0.0.255 any
+ permit ip 172.17.0.0 0.0.0.255 any
+!
+!
+ip prefix-list AS1001_SUM seq 10 permit 0.0.0.0/0 le 24
+!
+ip prefix-list FILTER seq 5 deny 10.0.0.0/8 le 32
+ip prefix-list FILTER seq 10 permit 0.0.0.0/0 le 32
+!
+ip prefix-list FOR_EIGRP_ALL seq 5 deny 10.7.0.0/24 le 32
+ip prefix-list FOR_EIGRP_ALL seq 10 permit 0.0.0.0/0 le 32
+!
+ip prefix-list WITHOUT_R19 seq 5 deny 10.5.0.19/32
+ip prefix-list WITHOUT_R19 seq 10 deny 10.7.0.32/30 le 32
+ip prefix-list WITHOUT_R19 seq 15 permit 0.0.0.0/0 le 32
+!
+route-map FILTER permit 10
+ match ip address prefix-list FILTER
+!
+route-map NEXTHOP_SELF permit 10
+ set ip next-hop self
+!
+route-map TO_LAMAS permit 10
+ set local-preference 200
+!
+route-map FOR_EIGRP_ALL permit 10
+ match ip address prefix-list FOR_EIGRP_ALL
+!
+!
+access-list 10 permit 172.0.0.0 0.255.255.255
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+ntp server 10.5.0.12
+ntp server 10.5.0.13 prefer
+!
+end
+
+R15#
