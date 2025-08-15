@@ -160,7 +160,7 @@ interface Tunnel1
 
 ![DMVPN_R15](https://github.com/MIranaNightshade/otus-networks/blob/main/lab13_DMVPN/jpeg/DMVPN_R15.png)
 
-#### <a id=2>3. Настроим IP связность между офисами через туннели с помощью EIGRP.</a>
+#### <a id=3>3. Настроим IP связность между офисами через туннели с помощью EIGRP.</a>
 
 ***EIGRP через GRE будет в AS100, через DMVPN в AS200, при редистрибьюции OSPF отфильтруем линковочные подсети 10.7.0.0/24 с помощью route-map***
 
