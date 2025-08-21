@@ -14,42 +14,58 @@
 Настраиваем по следующему шаблону:
 
 **Сервер (R12):**
+
 *Зададим хостнейм и домен, включим http server, чтобы другие роутры могли обращаться к R12 за сертификатами:*
+
 hostname R12-CA
 ip domain name otus.local
 ip http server
+
 *Сгенерируем пару ключей:*
+
 crypto key generate rsa general-keys label R12-CA modulus 2048 exportable
+
 *Включим CA сервер:*
+
 crypto pki server R12-CA
   database level com
   no shut
 
 **Клиенты:**
+
 *Зададим домен:*
+
 ip domain name otus.local
 
 *укажем ip адрес нашего CA:*
+
 ip host R12-CA 100.30.0.12
 
 *Сгенерируем ключи:*
+
 crypto key generate rsa
 
 *Укажем куда роутеру обращаться за сертификатом:*
+
 crypto pki trustpoint R12-CA
+
 enrollment url http://R12-CA:80
 
 **Получение клиентом сертификата сервера:**
+
 crypto pki authenticate R12-CA
 
 **Получение клиентом сертификата для себя:**
+
 crypto pki enroll R12-CA
 
 **Подтверждение всех сертификатов на сервере:**
+
 crypto pki server R12-CA grant all
 
 
 **Конфигурация на R12:**
+
 ```
 !
 hostname R12-CA
