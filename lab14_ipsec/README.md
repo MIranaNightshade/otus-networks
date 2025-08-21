@@ -6,9 +6,11 @@
 1. [Настроить GRE поверх IPSec между офисами Москва и С.-Петербург.](#1)
 2. [Настроить DMVPN поверх IPSec между Москва и Чокурдах, Лабытнанги.](#2)
 3. [Все узлы в офисах в лабораторной работе должны иметь IP связность.](#3)
+
 *Для IPSec использовать CA и сертификаты.*
 
 *Настроим СA на R14 и получим от него сертификаты на R14, R15, R18, R27, R28.*
+
 Настраиваем по следующему шаблону:
 
 **Сервер (R12):**
@@ -216,4 +218,32 @@ R14#
 ![gre over ipsec](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/GRE_over_IPsec.png)
 
 
+#### <a id=2>2. Настроим DMVPN поверх IPSec между Москва и Чокурдах, Лабытнанги.</a>
 
+**Применим ipsec профиль на туннельный интерфейс R14:**
+***(Конфигурация R15, R27, R28 аналогичная)***
+
+```
+R14#show  running-config interface tunnel 1
+Building configuration...
+
+Current configuration : 257 bytes
+!
+interface Tunnel1
+ ip address 10.10.3.14 255.255.255.0
+ no ip redirects
+ ip nhrp map multicast dynamic
+ ip nhrp network-id 1414
+ tunnel source 100.30.0.114
+ tunnel mode gre multipoint
+ tunnel key 1414
+ tunnel protection ipsec profile IPSEC_GRE_DMVPN
+end
+
+R14#
+```
+Проверим поднялся ли туннель DMVPN over IPsec:
+
+![IPsec](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/DMVPN%20over%20IPsec.png)
+
+![IPsec1](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/DMVPN%20over%20IPsec1.png)
