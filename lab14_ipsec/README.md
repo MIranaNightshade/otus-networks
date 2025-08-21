@@ -263,3 +263,19 @@ R14#
 ![IPsec](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/DMVPN%20over%20IPsec.png)
 
 ![IPsec1](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/DMVPN%20over%20IPsec1.png)
+
+
+#### <a id=3>3. Проверим IP связность.</a>
+
+Ping из МСК в СПБ, Чокурдах, Лабытнанги:
+
+![](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/ping_MSK_to_SPB_CHOKUR_LABIT.png)
+
+ping из СПБ в Чокурдах, Лабытнанги:
+
+![](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/ping_SPB_to_CHOKUR_LABIT.png)
+
+ping из Чокурдах в Лабытнанги:
+
+![](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/ping_CHOKUR_LABIT.png)
+
