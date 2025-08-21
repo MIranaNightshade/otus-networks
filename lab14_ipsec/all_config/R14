@@ -1,0 +1,360 @@
+R14#show  running-config
+Building configuration...
+
+Current configuration : 9759 bytes
+!
+! Last configuration change at 23:35:50 UTC Thu Aug 21 2025
+! NVRAM config last updated at 17:22:41 UTC Thu Aug 21 2025
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R14
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip domain name otus.local
+ip host R12-CA 100.30.0.12
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint R12-CA
+ enrollment url http://R12-CA:80
+ serial-number
+ revocation-check crl
+!
+!
+crypto pki certificate chain R12-CA
+ certificate 03
+  3082030B 308201F3 A0030201 02020103 300D0609 2A864886 F70D0101 05050030
+  11310F30 0D060355 04031306 5231322D 4341301E 170D3235 30383231 31343532
+  33325A17 0D323630 38323131 34353233 325A3030 312E300F 06035504 05130836
+  37313039 30383830 1B06092A 864886F7 0D010902 160E5231 342E6F74 75732E6C
+  6F63616C 30820122 300D0609 2A864886 F70D0101 01050003 82010F00 3082010A
+  02820101 00A05AEF E829DE0C DFF15464 31CA169E BBB8A1EE D80372EB E014D39D
+  9546D513 3466137C C312C100 1602FF02 567F74B5 CAC26878 67FE10A7 2F7CB7FF
+  5833E3A6 7B9C90EF 72F56F5F 948FD143 D6640E43 68F3542E 232A0B69 CEF773BB
+  6DB5A61A DB18524C CCC5C779 F243B32D 86517ACC DB635548 0469B648 9DBC2D50
+  EF5DADB2 E4904E93 5364F6E0 6CD68408 D09276F0 40796A67 16C2F887 1A0A6C93
+  F3D4DC8F DAC9190D 2D796ED6 74CE72F5 F527681F 7418759C 5DA564B4 6C0AE07E
+  0351F43D C6D4D334 617B6989 D2BE5F8B 96395C01 1F482AEA F28AD08E D71DE10F
+  35FB04A7 3FB29891 2C767B8E 0CCBFCD1 78FB04BE D1E7474C CF818740 ED3A03F7
+  CA122E3B 6B020301 0001A34F 304D300B 0603551D 0F040403 0205A030 1F060355
+  1D230418 30168014 898D109B 989422A4 FE365A30 E9748C89 F8516851 301D0603
+  551D0E04 1604142A B6AA2543 4F792A60 329D3226 BB126A08 1B114D30 0D06092A
+  864886F7 0D010105 05000382 010100C3 CC81DAA8 81029837 351CE592 3AA78E41
+  DB1752EC B18CE481 C7CA454D A2CE9092 B5EBA115 C2E38E81 545089A2 A04C5C38
+  5803FB48 E29664AD 0E5F9DC1 DB65F4A2 3FF6BCBE 08B4ED9C 5C11D9B8 C068CF5F
+  5AB0A164 B4D9BC60 CA52765B E8791C07 A7EFA3C4 DBF3077B EFFEBD9C 43280803
+  303D19BD 9DD3EA89 8E8F819E FD4636BC 0588123B 5CCE1898 CA9DF209 F48FCD91
+  02FD4F18 2068307D 91962116 98DF6A51 2043F565 412B7EE4 0DD3B24E C0D65903
+  8B53F78D 6619F402 0154D25B A9C57002 44C8BFDB 77198164 BCFBF1A6 294506E9
+  3641333F 4B1A7580 C07FAA75 A5D656FA C09AC02F DEF2653F F00096D9 97EFFFCF
+  A0447713 A08B7BD6 70AA4E0E CFEEB1
+        quit
+ certificate ca 01
+  30820300 308201E8 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  11310F30 0D060355 04031306 5231322D 4341301E 170D3235 30383231 31343435
+  33335A17 0D323830 38323031 34343533 335A3011 310F300D 06035504 03130652
+  31322D43 41308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201
+  0A028201 0100E2DB 1DA5CB72 409715B5 5D0E7D47 50F8E831 9F913A7D 49FB80C8
+  08F58DAA 9479A54D 9D61FC40 D776EDD2 FCC40349 DFD93C26 00DADC81 0C6D9C25
+  87A8EABE 3D417E60 0CFE8EBA F26697E1 3344B20C B40299FD 995D5F59 4DAAE35B
+  0124FD3A 774E07FF 803CA040 84697378 9CDB6914 C825934D 8A1FC20B 486F14EA
+  36D8536F 8D312F3D 6CBCA720 A311CC28 D5D86432 249392DC 19DC79CD BBA557EA
+  08C21C5D 6DE5D0E5 828417B2 E56BA767 C6DD1220 1E7AE015 ABB8EFD4 0386FA04
+  849EB165 FD06D670 68C6A08E 49E3A814 CD7267D5 140CCA4D C23A7676 249B8B73
+  2A2F8550 0C466DFD BD855B05 99232D8F C077020E FC131BDF 58DB0150 1F653682
+  CA7B8BDD C6F30203 010001A3 63306130 0F060355 1D130101 FF040530 030101FF
+  300E0603 551D0F01 01FF0404 03020186 301F0603 551D2304 18301680 14898D10
+  9B989422 A4FE365A 30E9748C 89F85168 51301D06 03551D0E 04160414 898D109B
+  989422A4 FE365A30 E9748C89 F8516851 300D0609 2A864886 F70D0101 04050003
+  82010100 CC6A378D BB1482E4 1A5C2580 7447D072 C02F00F3 2C5CC225 A200BA97
+  53E26940 BA9963BA 7A2DDBB6 DBFE335C 6A49D003 5FBE6CD2 9D902284 6286CE28
+  150F390D 6CEE3994 AF5FA171 91947024 6E514ADB DA5BC9BE B95046F9 55248FCD
+  153FAFB8 68147911 2D4814F6 1BFFFA60 7C1C96D8 15E6A77A 7D68181D 5AF4DB72
+  3B3E22C2 2BED9F40 F13CE120 F336C06C 6F9A5595 CB05A960 551FF031 946C94FA
+  0CCF6CD4 AB85F01C 919E7282 8AB5B73C A1A54C9B BDC38903 76A96215 0678C5C4
+  94AA2402 97D20660 DEBA15D0 4D0B61EA F64C96A6 4CBB92D3 FB351498 3C3B0EF0
+  18A2CF0A B84267D6 EE2D0B01 CCF51190 C375BAB9 4038FE71 65F0BC9C A3F9D5FF 19D16F14
+        quit
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+crypto isakmp policy 1
+ encr aes 192
+ hash sha256
+ group 5
+!
+!
+crypto ipsec transform-set IPSEC esp-aes esp-sha-hmac
+ mode transport
+!
+crypto ipsec profile IPSEC_GRE_DMVPN
+ set transform-set IPSEC
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.0.14 255.255.255.255
+!
+interface Loopback1
+ ip address 100.30.0.19 255.255.255.255
+!
+interface Loopback2
+ ip address 100.30.0.14 255.255.255.255
+!
+interface Loopback3
+ ip address 100.30.0.114 255.255.255.255
+!
+interface Loopback4
+ ip address 100.30.0.214 255.255.255.255
+!
+interface Tunnel0
+ ip address 10.10.1.14 255.255.255.0
+ tunnel source 100.30.0.214
+ tunnel destination 100.30.6.18
+ tunnel protection ipsec profile IPSEC_GRE_DMVPN
+!
+interface Tunnel1
+ ip address 10.10.3.14 255.255.255.0
+ no ip redirects
+ ip nhrp map multicast dynamic
+ ip nhrp network-id 1414
+ tunnel source 100.30.0.114
+ tunnel mode gre multipoint
+ tunnel key 1414
+ tunnel protection ipsec profile IPSEC_GRE_DMVPN
+!
+interface Tunnel10
+ no ip address
+ tunnel source Ethernet0/2
+!
+interface Ethernet0/0
+ ip address 10.7.0.10 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 10
+!
+interface Ethernet0/1
+ ip address 10.7.0.30 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 10
+!
+interface Ethernet0/2
+ ip address 176.30.1.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+!
+interface Ethernet0/3
+ ip address 10.7.0.33 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+ ip ospf 1 area 101
+!
+interface Ethernet1/0
+ ip address 100.30.0.1 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+ ip ospf 1 area 0
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+!
+router eigrp ALL
+ !
+ address-family ipv4 unicast autonomous-system 100
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel0
+   summary-address 10.4.0.0 255.255.255.0
+   summary-address 10.5.0.0 255.255.255.0
+   summary-address 172.16.0.0 255.255.255.0
+   summary-address 172.17.0.0 255.255.255.0
+   no passive-interface
+  exit-af-interface
+  !
+  topology base
+   redistribute ospf 1 metric 100000 10 255 1 1500 route-map FOR_EIGRP_ALL
+   redistribute eigrp 200
+  exit-af-topology
+  network 10.4.0.0 0.0.0.255
+  network 10.5.0.0 0.0.0.255
+  network 10.10.1.0 0.0.0.255
+  network 172.16.0.0 0.0.0.255
+  network 172.17.0.0 0.0.0.255
+ exit-address-family
+!
+!
+router eigrp ALL1
+ !
+ address-family ipv4 unicast autonomous-system 200
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel1
+   summary-address 10.4.0.0 255.255.255.0
+   summary-address 10.5.0.0 255.255.255.0
+   summary-address 172.16.0.0 255.255.255.0
+   summary-address 172.17.0.0 255.255.255.0
+   no next-hop-self
+   no passive-interface
+   no split-horizon
+  exit-af-interface
+  !
+  topology base
+   redistribute eigrp 100 route-map NEXTHOP_SELF
+   redistribute ospf 1 metric 100000 10 255 1 1500 route-map FOR_EIGRP_ALL
+  exit-af-topology
+  network 10.4.0.0 0.0.0.255
+  network 10.5.0.0 0.0.0.255
+  network 10.10.3.0 0.0.0.255
+  network 172.16.0.0 0.0.0.255
+  network 172.17.0.0 0.0.0.255
+ exit-address-family
+!
+router ospf 1
+ router-id 14.14.14.14
+ area 101 stub no-summary
+ redistribute eigrp 100 subnets
+ redistribute eigrp 200 subnets
+ network 10.5.0.14 0.0.0.0 area 0
+ default-information originate
+!
+router bgp 1001
+ bgp log-neighbor-changes
+ network 100.30.0.0 mask 255.255.255.0
+ redistribute connected route-map FILTER
+ neighbor 10.5.0.15 remote-as 1001
+ neighbor 10.5.0.15 update-source Loopback0
+ neighbor 10.5.0.15 next-hop-self
+ neighbor 176.30.1.1 remote-as 101
+ neighbor 176.30.1.1 prefix-list AS1001_SUM out
+ neighbor 176.30.1.1 route-map PREPEND out
+ neighbor 176.30.1.1 filter-list 1 out
+!
+ip forward-protocol nd
+!
+ip as-path access-list 1 permit ^$
+!
+ip http server
+no ip http secure-server
+ip nat pool IP_NAT 100.30.0.14 100.30.0.14 netmask 255.255.255.0
+ip nat inside source list USER_FOR_NAT pool IP_NAT overload
+ip nat inside source static tcp 10.5.0.19 22 100.30.0.19 6262 extendable
+ip route 100.30.0.0 255.255.255.0 Null0 210
+!
+ip access-list extended USER_FOR_NAT
+ deny   ip 172.16.0.0 0.0.0.255 172.16.0.0 0.0.255.255
+ deny   ip 172.16.0.0 0.0.0.255 172.17.0.0 0.0.255.255
+ deny   ip 172.17.0.0 0.0.0.255 172.16.0.0 0.0.255.255
+ deny   ip 172.17.0.0 0.0.0.255 172.17.0.0 0.0.255.255
+ deny   ip 172.16.0.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny   ip 172.17.0.0 0.0.0.255 10.0.0.0 0.255.255.255
+ permit ip 172.16.0.0 0.0.0.255 any
+ permit ip 172.17.0.0 0.0.0.255 any
+!
+!
+ip prefix-list AS1001_SUM seq 10 permit 0.0.0.0/0 le 24
+!
+ip prefix-list FILTER seq 5 deny 10.0.0.0/8 le 32
+ip prefix-list FILTER seq 10 permit 0.0.0.0/0 le 32
+!
+ip prefix-list FOR_EIGRP_ALL seq 5 deny 10.7.0.0/24 le 32
+ip prefix-list FOR_EIGRP_ALL seq 10 permit 0.0.0.0/0 le 32
+!
+route-map FILTER permit 10
+ match ip address prefix-list FILTER
+!
+route-map NEXTHOP_SELF permit 10
+ set ip next-hop self
+!
+route-map FOR_EIGRP_ALL permit 10
+ match ip address prefix-list FOR_EIGRP_ALL
+!
+route-map PREPEND permit 10
+ set as-path prepend 1001 1001 1001 1001 1001 1001
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+ntp server 10.5.0.12 prefer
+ntp server 10.5.0.13
+!
+end
+
+R14#
