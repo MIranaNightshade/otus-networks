@@ -196,6 +196,12 @@ crypto pki certificate chain R12-CA
 redundancy
 !
 ```
+Просмотрим выданные сертификаты:
+
+![R12_cert](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/R12_cert.png)
+
+[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab14_ipsec/all_config)
+
 #### <a id=1> 1. Настроим GRE поверх IPSec между офисами Москва и С.-Петербург.</a>
 
 **Конфигурация R14 (на R15, R18, R27, R28 выполнена аналогичная конфигурация):**
@@ -233,6 +239,7 @@ R14#
 
 ![gre over ipsec](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/GRE_over_IPsec.png)
 
+[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab14_ipsec/all_config)
 
 #### <a id=2>2. Настроим DMVPN поверх IPSec между Москва и Чокурдах, Лабытнанги.</a>
 
@@ -264,6 +271,8 @@ R14#
 
 ![IPsec1](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/DMVPN%20over%20IPsec1.png)
 
+[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab14_ipsec/all_config)
+
 
 #### <a id=3>3. Проверим IP связность.</a>
 
@@ -278,4 +287,6 @@ ping из СПБ в Чокурдах, Лабытнанги:
 ping из Чокурдах в Лабытнанги:
 
 ![](https://github.com/MIranaNightshade/otus-networks/blob/main/lab14_ipsec/jpeg/ping_CHOKUR_LABIT.png)
+
+[ВСЕ КОНФИГИ ТУТ](https://github.com/MIranaNightshade/otus-networks/tree/main/lab14_ipsec/all_config)
 
