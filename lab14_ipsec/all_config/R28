@@ -1,0 +1,353 @@
+R28#show  running-config
+Building configuration...
+
+Current configuration : 9166 bytes
+!
+! Last configuration change at 17:37:47 UTC Thu Aug 21 2025
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R28
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+mmi polling-interval 60
+no mmi auto-configure
+no mmi pvc
+mmi snmp-timeout 180
+!
+!
+!
+!
+!
+!
+!
+!
+
+
+!
+!
+!
+!
+no ip domain lookup
+ip domain name otus.local
+ip host R14-CA 10.5.0.14
+ip host R12-CA 100.30.0.12
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint R12-CA
+ enrollment url http://R12-CA:80
+ serial-number
+ revocation-check crl
+!
+!
+crypto pki certificate chain R12-CA
+ certificate 05
+  3082030B 308201F3 A0030201 02020105 300D0609 2A864886 F70D0101 05050030
+  11310F30 0D060355 04031306 5231322D 4341301E 170D3235 30383231 31343532
+  33325A17 0D323630 38323131 34353233 325A3030 312E300F 06035504 05130836
+  37313039 33313230 1B06092A 864886F7 0D010902 160E5232 382E6F74 75732E6C
+  6F63616C 30820122 300D0609 2A864886 F70D0101 01050003 82010F00 3082010A
+  02820101 00994418 64C8E45C CE08CD07 14BEDC98 16063DE1 CA7BC941 A0AAB140
+  73B2EB40 C11770C5 236F95D3 891162E2 35D03184 D3EF9AE5 61CA19B6 5C4B5FBD
+  8E408C11 EA171899 635B7539 E03BE40B E740658B EC440938 E8E7C707 475A07BA
+  3225AC1E 72928D96 7D9AB319 DD0E241A 0EEEA626 611C06E0 E0AE8A44 33BF9BA2
+  E2AEBF87 5EC4D136 D34DDED6 AB682ED3 28F4B3B1 4CD4B744 9A0EA5D7 42C1E964
+  005860D4 D4F6CDF5 93FB0699 783015EF 5E18C55C BBB1E947 50E407A7 B8B05D40
+  529FFE59 D5B5438B 2C80C07D EA2804C3 178FF824 DEA8F285 0F022C3F 7DCA7E04
+  F0D9AF84 350B3FD0 5139E248 D26365C6 8CDCD288 5EA9C96E 5C9A6666 0D71B4DB
+  9FF413E3 81020301 0001A34F 304D300B 0603551D 0F040403 0205A030 1F060355
+  1D230418 30168014 898D109B 989422A4 FE365A30 E9748C89 F8516851 301D0603
+  551D0E04 160414C9 567DABAA 7CC616C7 CC4B0ED3 F57CC14E 3C354830 0D06092A
+  864886F7 0D010105 05000382 01010096 CBAAF318 7B30D934 8A49D0CA 5E50C240
+  573AE0FC AAFED6E0 7DB25169 444A5241 0D350501 087CF786 649B5379 87E9A3D7
+  F8165E53 927A06E7 B302661E A134C173 9573E94A C04F008A 71913D17 0D16837A
+  45C5AF4A 2672C100 76262007 37DC3DCE 87F99CDF 25BC3540 E411D37B 38A43FBC
+  76BD07DA E0D118EC 4DA0D8EA F78BF00D 22321CDD 408F23F8 3FC11910 9F6F8139
+  4CCBE43F 26E2BA00 802B08DD 9C5CCDB4 FF14872C 4DD030F5 EEB84C82 600F944F
+  80461261 A8F5F6CB 642927B1 81891247 D189EDD5 06718E17 D082DDD6 B1ECDD9F
+  46A3D952 EC81EDA2 29688B7F C883D4E2 D5BDF655 6173B112 EFC4B137 2A39399C
+  E91801D0 FB18FF6E 45DDCCBF 3828EA
+        quit
+ certificate ca 01
+  30820300 308201E8 A0030201 02020101 300D0609 2A864886 F70D0101 04050030
+  11310F30 0D060355 04031306 5231322D 4341301E 170D3235 30383231 31343435
+  33335A17 0D323830 38323031 34343533 335A3011 310F300D 06035504 03130652
+  31322D43 41308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201
+  0A028201 0100E2DB 1DA5CB72 409715B5 5D0E7D47 50F8E831 9F913A7D 49FB80C8
+  08F58DAA 9479A54D 9D61FC40 D776EDD2 FCC40349 DFD93C26 00DADC81 0C6D9C25
+  87A8EABE 3D417E60 0CFE8EBA F26697E1 3344B20C B40299FD 995D5F59 4DAAE35B
+  0124FD3A 774E07FF 803CA040 84697378 9CDB6914 C825934D 8A1FC20B 486F14EA
+  36D8536F 8D312F3D 6CBCA720 A311CC28 D5D86432 249392DC 19DC79CD BBA557EA
+  08C21C5D 6DE5D0E5 828417B2 E56BA767 C6DD1220 1E7AE015 ABB8EFD4 0386FA04
+  849EB165 FD06D670 68C6A08E 49E3A814 CD7267D5 140CCA4D C23A7676 249B8B73
+  2A2F8550 0C466DFD BD855B05 99232D8F C077020E FC131BDF 58DB0150 1F653682
+  CA7B8BDD C6F30203 010001A3 63306130 0F060355 1D130101 FF040530 030101FF
+  300E0603 551D0F01 01FF0404 03020186 301F0603 551D2304 18301680 14898D10
+  9B989422 A4FE365A 30E9748C 89F85168 51301D06 03551D0E 04160414 898D109B
+  989422A4 FE365A30 E9748C89 F8516851 300D0609 2A864886 F70D0101 04050003
+  82010100 CC6A378D BB1482E4 1A5C2580 7447D072 C02F00F3 2C5CC225 A200BA97
+  53E26940 BA9963BA 7A2DDBB6 DBFE335C 6A49D003 5FBE6CD2 9D902284 6286CE28
+  150F390D 6CEE3994 AF5FA171 91947024 6E514ADB DA5BC9BE B95046F9 55248FCD
+  153FAFB8 68147911 2D4814F6 1BFFFA60 7C1C96D8 15E6A77A 7D68181D 5AF4DB72
+  3B3E22C2 2BED9F40 F13CE120 F336C06C 6F9A5595 CB05A960 551FF031 946C94FA
+  0CCF6CD4 AB85F01C 919E7282 8AB5B73C A1A54C9B BDC38903 76A96215 0678C5C4
+  94AA2402 97D20660 DEBA15D0 4D0B61EA F64C96A6 4CBB92D3 FB351498 3C3B0EF0
+  18A2CF0A B84267D6 EE2D0B01 CCF51190 C375BAB9 4038FE71 65F0BC9C A3F9D5FF 19D16F                                                                                             14
+        quit
+!
+redundancy
+!
+!
+track 1 ip sla 1 reachability
+ delay down 10 up 30
+!
+track 2 ip sla 2 reachability
+ delay down 10 up 30
+!
+track 10 interface Ethernet0/0 line-protocol
+ delay down 10 up 30
+!
+track 20 interface Ethernet0/1 line-protocol
+ delay down 10 up 30
+!
+track 100 list boolean and
+ object 1
+ object 10
+!
+track 200 list boolean and
+ object 2
+ object 20
+!
+!
+!
+!
+!
+!
+crypto isakmp policy 1
+ encr aes 192
+ hash sha256
+ group 5
+!
+!
+crypto ipsec transform-set IPSEC esp-aes esp-sha-hmac
+ mode transport
+!
+crypto ipsec profile IPSEC_GRE_DMVPN
+ set transform-set IPSEC
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.5.5.28 255.255.255.255
+!
+interface Tunnel0
+ ip address 10.10.3.28 255.255.255.0
+ no ip redirects
+ ip nhrp map 10.10.3.14 100.30.0.114
+ ip nhrp map multicast 100.30.0.114
+ ip nhrp network-id 1414
+ ip nhrp nhs 10.10.3.14
+ ip nhrp registration no-unique
+ tunnel source Ethernet0/0
+ tunnel mode gre multipoint
+ tunnel key 1414
+ tunnel protection ipsec profile IPSEC_GRE_DMVPN
+!
+interface Tunnel1
+ ip address 10.10.4.28 255.255.255.0
+ no ip redirects
+ ip nhrp map 10.10.4.15 100.30.0.115
+ ip nhrp map multicast 100.30.0.115
+ ip nhrp network-id 1515
+ ip nhrp nhs 10.10.4.15
+ ip nhrp registration no-unique
+ tunnel source Ethernet0/1
+ tunnel mode gre multipoint
+ tunnel key 1515
+ tunnel protection ipsec profile IPSEC_GRE_DMVPN
+!
+interface Ethernet0/0
+ ip address 94.30.3.30 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+!
+interface Ethernet0/1
+ ip address 94.30.3.26 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+!
+interface Ethernet0/2
+ no ip address
+!
+interface Ethernet0/2.10
+ encapsulation dot1Q 10
+ ip address 172.16.5.254 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+ ip policy route-map FOR_VPC30
+!
+interface Ethernet0/2.20
+ encapsulation dot1Q 20
+ ip address 172.17.5.254 255.255.255.0
+ ip nat inside
+ ip virtual-reassembly in
+ ip policy route-map FOR_VPC31
+!
+interface Ethernet0/2.100
+ encapsulation dot1Q 100
+ ip address 10.4.5.254 255.255.255.0
+!
+interface Ethernet0/3
+ no ip address
+ shutdown
+!
+interface Ethernet1/0
+ no ip address
+ shutdown
+!
+interface Ethernet1/1
+ no ip address
+ shutdown
+!
+interface Ethernet1/2
+ no ip address
+ shutdown
+!
+interface Ethernet1/3
+ no ip address
+ shutdown
+!
+!
+router eigrp ALL1
+ !
+ address-family ipv4 unicast autonomous-system 200
+  !
+  af-interface default
+   passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel0
+   summary-address 10.4.5.0 255.255.255.0
+   summary-address 10.5.5.0 255.255.255.0
+   summary-address 172.16.5.0 255.255.255.0
+   summary-address 172.17.5.0 255.255.255.0
+   no passive-interface
+  exit-af-interface
+  !
+  af-interface Tunnel1
+   summary-address 10.4.5.0 255.255.255.0
+   summary-address 10.5.5.0 255.255.255.0
+   summary-address 172.16.5.0 255.255.255.0
+   summary-address 172.17.5.0 255.255.255.0
+   no passive-interface
+  exit-af-interface
+  !
+  topology base
+  exit-af-topology
+  network 10.4.5.0 0.0.0.255
+  network 10.5.5.0 0.0.0.255
+  network 10.10.3.0 0.0.0.255
+  network 10.10.4.0 0.0.0.255
+  network 172.16.5.0 0.0.0.255
+  network 172.17.5.0 0.0.0.255
+ exit-address-family
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+ip nat inside source route-map E00 interface Ethernet0/0 overload
+ip nat inside source route-map E01 interface Ethernet0/1 overload
+ip route 0.0.0.0 0.0.0.0 94.30.3.29
+ip route 0.0.0.0 0.0.0.0 94.30.3.25
+!
+ip access-list standard LAN
+ permit 172.16.5.0 0.0.0.255
+ permit 172.17.5.0 0.0.0.255
+!
+ip access-list extended VPC30
+ deny   ip 172.16.5.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny   ip 172.16.5.0 0.0.0.255 172.0.0.0 0.255.255.255
+ permit ip 172.16.5.0 0.0.0.255 any
+ip access-list extended VPC31
+ deny   ip 172.17.5.0 0.0.0.255 10.0.0.0 0.255.255.255
+ deny   ip 172.17.5.0 0.0.0.255 172.0.0.0 0.255.255.255
+ permit ip 172.17.5.0 0.0.0.255 any
+!
+ip sla 1
+ icmp-echo 94.30.3.29
+ threshold 300
+ timeout 2000
+ frequency 3
+ip sla schedule 1 life forever start-time now
+ip sla 2
+ icmp-echo 94.30.3.25
+ threshold 300
+ timeout 2000
+ frequency 3
+ip sla schedule 2 life forever start-time now
+!
+route-map FOR_VPC30 permit 10
+ match ip address VPC30
+ set ip next-hop verify-availability 94.30.3.29 20 track 100
+ set ip next-hop verify-availability 94.30.3.25 30 track 200
+!
+route-map FOR_VPC31 permit 10
+ match ip address VPC31
+ set ip next-hop verify-availability 94.30.3.25 20 track 200
+ set ip next-hop verify-availability 94.30.3.29 30 track 100
+!
+route-map E01 permit 10
+ match ip address LAN
+ match interface Ethernet0/1
+!
+route-map E00 permit 10
+ match ip address LAN
+ match interface Ethernet0/0
+!
+!
+access-list 1 permit 172.16.5.0 0.0.0.255
+access-list 2 permit 172.17.5.0 0.0.0.255
+!
+control-plane
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+ logging synchronous
+line aux 0
+line vty 0 4
+ login
+ transport input none
+!
+!
+end
+
+R28#
